@@ -1,0 +1,12 @@
+.Content{
+    background-color: beige;
+    font:  Bold 120% cursive;
+}
+
+.Welcome-text{
+    text-align: center;
+}
+
+.Logos{
+    display: flex;
+}

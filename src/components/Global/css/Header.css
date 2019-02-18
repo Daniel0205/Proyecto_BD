@@ -1,0 +1,20 @@
+#logo {
+    animation: App-lo-spin infinite 20s linear;
+    height: 70px;
+}
+
+#logo p{
+    padding-top: 60%
+}
+
+.Header {
+    height: 70px;
+    background-color: #282c34;
+    font-size: calc(10px + 2max);    
+    color: white;
+    display: inline-flex;
+    width: 100%;
+}
+
+
+

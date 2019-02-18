@@ -1,0 +1,60 @@
+.login p{
+    color: white;
+    font:   120% cursive;
+}
+
+.form{
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    font:   120% cursive;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: darkred;
+    border-radius: 25px;
+}
+
+.form input{
+    background-color: rgb(230, 230, 230);
+    border-bottom-width: 0px;    
+    border-left-width: 0px;    
+    border-right-width: 0px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;  
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;  
+    border-top-width: 0px;    
+    box-sizing: border-box;    
+    color: rgb(102, 102, 102);    
+    font-size: 15px;    
+    height: 50px;    
+    padding-left: 30px;    
+    width: 60%;
+}
+
+.form input[type=submit]{
+    background-color: #008CBA; 
+    color: white;
+    margin-top: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 20%;
+    padding: 0;    
+    border: 2px solid #008CBA;
+}
+
+.form input[type=submit]:hover{
+    background-color: white;
+    color: black;
+    
+}
+
+.registro{
+    margin-top: 2%;
+    text-align: center;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color:darkred;
+    border-radius: 25px;
+}
