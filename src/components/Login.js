@@ -10,7 +10,7 @@ class Login extends Component {
   }
 
   handleClick(){
-    this.props.callback('registro');    
+    this.props.callback('Registro');    
   }
 
 

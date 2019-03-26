@@ -8,16 +8,18 @@ import userLogo from '../../images/user-icon.svg';
 import User from '../User.js';
 import Title from '../Title.js';
 import Login from '../Login';
+import Registro from '../Registro';
+import Mapa from '../Mapa';
 
 
 class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pagina: 'login',
+      pagina: 'Login',
     };
     this.getResponse = this.getResponse.bind(this);
-    this.getusuario = this.getusuario.bind(this);
+    this.getUsuario = this.getUsuario.bind(this);
   }
 
   getResponse(log){
@@ -25,31 +27,41 @@ class Content extends Component {
       pagina:log
     }));
   }
-  getusuario(log){
+  
+  getUsuario(log){
     this.setState(state => ({
-      pagina:this.state.pagina,
-      tipoUser:log
+      pagina:log,
     }));
-    console.log(log);
   }
 
-
   render() {
-
-    if(this.state.pagina==='login'){
-      return (
-        <Login callback={this.getResponse}/>);
-    }
-    else if(this.state.pagina==='registro'){
-      return(
-        <div className="Content">
-        <Title mensaje='Seleccione el tipo de usuario a registrar:'/>
-        <div className='Logos'>
-          <User URL= {userLogo} msj="Usuario" callback={this.getusuario}/>
-          <User URL= {taxistaLogo} msj="Conductor" callback={this.getusuario}/>
-        </div>
-      </div>); 
-    }   
+    return(<Mapa/>);
+/*
+    switch(this.state.pagina){
+      case 'Login':
+        return (
+          <Login callback={this.getResponse}/>);
+      case 'Registro':
+        return(
+          <div className="Content">
+          <Title mensaje='Seleccione el tipo de usuario a registrar:'/>
+          <div className='Logos'>
+            <User URL= {userLogo} msj="Usuario" callback={this.getUsuario}/>
+            <User URL= {taxistaLogo} msj="Conductor" callback={this.getUsuario}/>
+          </div>
+        </div>);
+      case 'Conductor':
+        return(
+          <Registro user={this.state.pagina}/>
+         );
+      case 'Usuario':
+        return(
+          <Registro user={this.state.pagina}/>
+        );
+      default:
+      console.log("entro"); 
+          break;
+    }*/  
   }  
 }
 
