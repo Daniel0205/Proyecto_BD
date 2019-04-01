@@ -9,7 +9,8 @@ import User from '../User.js';
 import Title from '../Title.js';
 import Login from '../Login';
 import Registro from '../Registro';
-import Mapa from '../Mapa';
+import Viaje from '../Viaje'
+import Menu from '../Menu'
 
 
 class Content extends Component {
@@ -35,7 +36,7 @@ class Content extends Component {
   }
 
   render() {
-    return(<Mapa/>);
+    return(<Menu user="Conductor"/>);
 /*
     switch(this.state.pagina){
       case 'Login':

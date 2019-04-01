@@ -45,6 +45,7 @@ class Registro extends Component {
         for(let x = 0; x <= 39; x++) {
           allYears.push(2019 - x)
         }
+        
         const yearList = allYears.map((x) => {return(<option value={x} key={x}>{x}</option>)});
         
         return (
