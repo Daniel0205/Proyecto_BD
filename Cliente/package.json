@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "ajv": "6.8.1",
+    "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "leaflet": "^1.4.0",
     "react": "^16.8.1",
@@ -24,10 +25,15 @@
   "resolutions": {
     "ajv": "6.8.1"
   },
+
+  "proxy":"http://localhost:3001/",
+
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
   ]
+
+  
 }

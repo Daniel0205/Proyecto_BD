@@ -36,8 +36,8 @@ class Content extends Component {
   }
 
   render() {
-    return(<Menu user="Conductor"/>);
-/*
+    //return(<Menu user="Conductor"/>);
+
     switch(this.state.pagina){
       case 'Login':
         return (
@@ -62,7 +62,7 @@ class Content extends Component {
       default:
       console.log("entro"); 
           break;
-    }*/  
+    }
   }  
 }
 
