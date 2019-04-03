@@ -22,7 +22,7 @@ class Registro extends Component {
         <input type="password" name="psw" placeholder='Password*'/><br></br>
         <input type="text" name="nombre" placeholder='Nombre(s)*'/><br></br>
         <input type="text" name="apellido" placeholder='Apellido(s)*'/><br></br>
-        <select name="cars" defaultValue ="Select">
+        <select name="genero" defaultValue ="Select">
           <option value="Select" disabled>Selecciona un genero:</option>
           <option value="Masculina">Masculino</option>
           <option value="Femenino">Femenino</option>

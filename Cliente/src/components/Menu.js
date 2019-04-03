@@ -88,7 +88,7 @@ class Menu extends Component {
                     <div className='opciones'>
                         <h2>Seleccione una opcion:</h2>
                         <button  >Modificar Datos</button>
-                        <button  >Solicitar Viaje</button>
+                        <button  onClick={this.pagarViajes} >Solicitar Viaje</button>
                         </div>
                         <div className='kilometros'>
                     <h2>Kilometros</h2>
@@ -101,6 +101,8 @@ class Menu extends Component {
                 </div>
                 
             );
+        default:
+        break;
     }
   }
 }
