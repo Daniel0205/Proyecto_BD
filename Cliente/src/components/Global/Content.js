@@ -9,18 +9,22 @@ import User from '../User.js';
 import Title from '../Title.js';
 import Login from '../Login';
 import Registro from '../Registro';
+import SolicitudViaje from '../SolicitudViaje'
 import Viaje from '../Viaje'
 import Menu from '../Menu'
+import Reporte from '../Reporte'
 
 
 class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pagina: 'Login',
+      pagina: 'Solicitud-Viaje',
     };
     this.getResponse = this.getResponse.bind(this);
     this.getUsuario = this.getUsuario.bind(this);
+    this.getPosiciones = this.getPosiciones.bind(this);
+    this.calcularDistancia = this.calcularDistancia.bind(this);
   }
 
   getResponse(log){
@@ -35,8 +39,18 @@ class Content extends Component {
     }));
   }
 
+  getPosiciones(log){
+    console.log(log)
+    this.setState(state => (log));
+  }
+
+  calcularDistancia(){
+    return 15;
+  }
+  
+
   render() {
-    //return(<Menu user="Conductor"/>);
+
 
     switch(this.state.pagina){
       case 'Login':
@@ -59,6 +73,19 @@ class Content extends Component {
         return(
           <Registro user={this.state.pagina}/>
         );
+      
+      case 'Menu-Usuario':
+        return(
+          <Menu user="Usuario" />
+        )
+      case 'Solicitud-Viaje':
+          return(
+            <SolicitudViaje callback={this.getPosiciones}/>
+          );
+      case 'Viaje':
+          return(
+            <Viaje viaje={this.state} distancia={this.calcularDistancia()}/>
+          )
       default:
       console.log("entro"); 
           break;
