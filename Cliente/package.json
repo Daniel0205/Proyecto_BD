@@ -25,15 +25,10 @@
   "resolutions": {
     "ajv": "6.8.1"
   },
-
-  "proxy":"http://localhost:3001/",
-
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
   ]
-
-  
 }
