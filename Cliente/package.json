@@ -25,10 +25,6 @@
   "resolutions": {
     "ajv": "6.8.1"
   },
-<<<<<<< HEAD
-=======
-  "proxy": "http://localhost:3001/",
->>>>>>> 39aeffc873e7190dbcc886ba596f9ba73ec9d7ca
   "browserslist": [
     ">0.2%",
     "not dead",
