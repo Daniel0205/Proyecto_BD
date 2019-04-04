@@ -6,12 +6,15 @@ class Reporte extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        disponible:"none"
+        disponible:"none",
+        longitud:'',
+        latitud:''
     };  
 
     this.handleSelect = this.handleSelect.bind(this)
     this.retornarMapa = this.retornarMapa.bind(this)
     this.handleClick  = this.handleClick.bind(this) 
+    this.cancelar  = this.cancelar.bind(this) 
   }
 
 
@@ -19,6 +22,30 @@ class Reporte extends Component {
       this.setState({
           disponible:event.target.value
       })
+  }
+
+
+  handleClick(){
+    fetch("/reporte", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state)
+    })
+    .then(res => res.json())
+    .then(res => {
+      if(res[0].bool){
+        console.log("Reporte realizado exitosamente")
+      }
+      else {console.log("Reporte sin terminar")}
+      
+      this.props.callback('Menu-Conductor');});
+  }
+
+  cancelar(){
+    this.props.callback('Menu-Conductor');
   }
 
 
@@ -32,9 +59,6 @@ class Reporte extends Component {
       }
   }
 
-  handleClick(){
-    this.props.callback('Menu-Conductor');
-  }
 
 
   render() {
@@ -48,6 +72,7 @@ class Reporte extends Component {
         </select><br></br>
         {this.retornarMapa()}
         <button onClick={this.handleClick}>Reportar</button>
+        <button onClick={this.cancelar}>Cancelar</button>
       </div>
     ); 
   }

@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bo
 
 app.post("/login", function (req, res) {
   if (req.body.Username == "admin" && req.body.Password == "admin") {
-    res.json([{nombre:"daniel", user:"Usuario",login: true }]);
+    res.json([{nombre:"daniel", user:"Conductor",login: true }]);
   }
   else{
     res.json([{login: false }]);
@@ -59,6 +59,16 @@ app.post("/finalizarViaje", function (req, res) {
   res.json([{bool:true}]);
 
   console.log("Viaje guardado");
+});
+
+
+app.post("/reporte", function (req, res) {
+
+  res.json([{bool:true}]);
+
+  console.log(req.body)
+
+  console.log("Estado actualizado");
 });
 
 app.listen(3001, function () {
