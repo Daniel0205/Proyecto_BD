@@ -20,7 +20,7 @@ class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pagina: 'Menu-Conductor',
+      pagina: 'Login',
     };
     this.getResponse = this.getResponse.bind(this);
     this.setPage = this.setPage.bind(this);
