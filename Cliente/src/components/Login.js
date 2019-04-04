@@ -22,7 +22,7 @@ class Login extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const { cellphone, psw } = this.state;
-    fetch("/hola", {
+    fetch("/login", {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -31,8 +31,20 @@ class Login extends Component {
       body: JSON.stringify({ Username: cellphone, Password: psw })
     })
       .then(res => res.json())
-      .then(res => console.log(res));
+      .then(res => {
+        this.setState(res[0])
+        if(this.state.login){
+          
+          this.props.callback({
+            cellphone: "admin",
+            nombre: "daniel",
+            pagina: "Menu-"+this.state.user
+          });
+        }
+      });
   }
+
+
 
 //Funcion para actualizar las variables ingresadas en el login
   onChange = e => {

@@ -25,7 +25,8 @@ class Content extends Component {
     this.getResponse = this.getResponse.bind(this);
     this.setPage = this.setPage.bind(this);
     this.getPosiciones = this.getPosiciones.bind(this);
-    this.calcularDistancia = this.calcularDistancia.bind(this);
+    this.login = this.login.bind(this);
+    this.finalizarViaje=this.finalizarViaje.bind(this)
   }
 
   getResponse(log){
@@ -40,23 +41,47 @@ class Content extends Component {
     }));
   }
 
-  getPosiciones(log){
+  getPosiciones(log){    
+    if(log.pagina==="Menu-Usuario"){
+      delete this.state.latitudOrigen
+      delete this.state.longitudOrigen
+      delete this.state.descripcionOrigen
+      delete this.state.latitudDestino
+      delete this.state.longitudDestino
+      delete this.state.descripcionDestino
+      this.setState(state => (log)); 
+    }
+    else{
+      this.setState(state => (log)); 
+    }
+  }
+
+  finalizarViaje(estado){
+    delete this.state.calificacion
+    delete this.state.celularConductor
+    delete this.state.distancia
+    delete this.state.latitudOrigen
+    delete this.state.longitudOrigen
+    delete this.state.descripcionOrigen
+    delete this.state.latitudDestino
+    delete this.state.longitudDestino
+    delete this.state.descripcionDestino
     
+    this.setState(estado)
+    
+  }
+  
+  login(log){
     this.setState(state => (log));
   }
 
-  calcularDistancia(){
-    return 15;
-  }
-  
-
   render() {
-
+    console.log(this.state)
 
     switch(this.state.pagina){
       case 'Login':
         return (
-          <Login callback={this.getResponse}/>);
+          <Login callback={this.login}/>);
       case 'Registro':
         return(
           <div className="Content">
@@ -91,15 +116,15 @@ class Content extends Component {
 
       case 'Solicitud-Viaje':
           return(
-            <SolicitudViaje callback={this.getPosiciones}/>
+            <SolicitudViaje cellphone={this.state.cellphone} callback={this.getPosiciones}/>
           );
       case 'Viaje':
           return(
-            <Viaje viaje={this.state} distancia={this.calcularDistancia()} callback={this.setPage}/>
+            <Viaje viaje={this.state} callback={this.getPosiciones}/>
           );
       case 'Calificacion':
           return(
-            <Calificacion callback={this.setPage}/>
+            <Calificacion viaje={this.state} callback={this.finalizarViaje}/>
           );
       default:
       console.log("entro"); 
