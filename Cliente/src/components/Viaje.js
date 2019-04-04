@@ -15,14 +15,11 @@ class Viaje extends Component {
   }
 
   aceptar(){
-
+    this.props.callback('Calificacion');
   }
 
-  canelar(){
-    this.props.callback({
-        pagina:'Menu-Usuario'
-      });
-
+  cancelar(){
+    this.props.callback('Menu-Usuario');
   }
 
   render() {

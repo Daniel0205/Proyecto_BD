@@ -10,7 +10,8 @@ class Reporte extends Component {
     };  
 
     this.handleSelect = this.handleSelect.bind(this)
-    this.retornarMapa = this.retornarMapa.bind(this) 
+    this.retornarMapa = this.retornarMapa.bind(this)
+    this.handleClick  = this.handleClick.bind(this) 
   }
 
 
@@ -29,10 +30,12 @@ class Reporte extends Component {
             <Mapa/>
           </div>)
       }
-      else{
-          return 
-      }
   }
+
+  handleClick(){
+    this.props.callback('Menu-Conductor');
+  }
+
 
   render() {
     return (
@@ -44,7 +47,7 @@ class Reporte extends Component {
           <option value="Disponible">Disponible </option>
         </select><br></br>
         {this.retornarMapa()}
-        <button>Reportar</button>
+        <button onClick={this.handleClick}>Reportar</button>
       </div>
     ); 
   }
