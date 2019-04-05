@@ -1,3 +1,7 @@
+.App {
+    background-color: #ffffcc;
+}
+
 .login p{
     color: white;
     font:   120% cursive;
@@ -10,7 +14,7 @@
     font:   120% cursive;
     margin-left: 25%;
     margin-right: 25%;
-    background-color: darkred;
+    background-color:#ff9966;
     border-radius: 25px;
 }
 
@@ -55,6 +59,6 @@
     width: 50%;
     margin-left: 25%;
     margin-right: 25%;
-    background-color:darkred;
+    background-color:#ff9966;
     border-radius: 25px;
 }

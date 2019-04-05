@@ -16,8 +16,10 @@ class Registro extends Component {
   getDatos() { 
     const x = 'datos-Personales'+ this.state.user
     return(
+    <div id='datos-personales titulo'>   
+    <h3>Bienvenidos al registro para clientes</h3>
       <div id={x}>
-        <h1>Datos-Personales</h1>
+        <h1>Datos Personales</h1>
         <input type="text" name="cellphone" placeholder='Celular*'/><br></br>
         <input type="password" name="psw" placeholder='Password*'/><br></br>
         <input type="text" name="nombre" placeholder='Nombre(s)*'/><br></br>
@@ -29,7 +31,12 @@ class Registro extends Component {
           <option value="No Definido">No Definido</option>
         </select><br></br>
         <input type="text" name="direccion" placeholder='Direccion De Residencia'/><br></br>
-      </div>);
+      </div>
+      <div id='campos-obligatorios'>
+      <h6>(*) Campos obligatorios</h6>
+      </div>
+      <button id='registrarse-cliente' /* onClick={this.handleClick} */>Regristrarse</button>
+    </div>);
   }
 
   render() {
