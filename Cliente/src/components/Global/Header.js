@@ -7,14 +7,39 @@ import './css/Header.css'
 
 
 class Header extends Component {
+  constructor(props){
+    super(props)
 
-  render() {
+    this.state={
+      pagina:this.props.pagina
+    }
+
+    this.cerrarSesion = this.cerrarSesion.bind(this);
+    this.mostrarBoton = this.mostrarBoton.bind(this);
+
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return({pagina: nextProps.pagina})
+  }
+
+  cerrarSesion(){
+    this.props.callback({pagina:'Login'});
+  }
+
+  mostrarBoton(){
     
+    if(this.state.pagina==="Menu-Usuario"||this.state.pagina==="Menu-Conductor"){
+      return(<button onClick={this.cerrarSesion}>Cerrar Sesion</button>)
+    }
+  }
+
+  render() {    
     return (
       <div className="Header">
         <img src={logo} alt="logo" id="logo" />
-        <h1>NotThatEasyTaxy</h1>
-        
+        <h1>NotThatEasyTaxy</h1>        
+        {this.mostrarBoton()}
       </div> 
     );
     

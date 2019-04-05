@@ -15,7 +15,7 @@ class Login extends Component {
 
 
   handleClick() {
-    this.props.callback("Registro");
+    this.props.callback({pagina:"Registro"});
   }
 
 

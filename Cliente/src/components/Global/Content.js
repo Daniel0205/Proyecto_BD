@@ -29,16 +29,16 @@ class Content extends Component {
     this.finalizarViaje=this.finalizarViaje.bind(this)
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return({pagina: nextProps.pagina})
+  }
+
   getResponse(log){
-    this.setState(state => ({
-      pagina:log
-    }));
+    this.props.callback({pagina:log})
   }
   
   setPage(log){
-    this.setState(state => ({
-      pagina:log,
-    }));
+    this.props.callback({pagina:log})
   }
 
   getPosiciones(log){    
@@ -49,10 +49,10 @@ class Content extends Component {
       delete this.state.latitudDestino
       delete this.state.longitudDestino
       delete this.state.descripcionDestino
-      this.setState(state => (log)); 
+      this.setState(state => (log),()=>this.props.callback({pagina:log.pagina})); 
     }
     else{
-      this.setState(state => (log)); 
+      this.setState(state => (log),()=>this.props.callback({pagina:log.pagina})); 
     }
   }
 
@@ -67,12 +67,12 @@ class Content extends Component {
     delete this.state.longitudDestino
     delete this.state.descripcionDestino
     
-    this.setState(estado)
+    this.props.callback({pagina:estado.pagina})
     
   }
   
   login(log){
-    this.setState(state => (log));
+    this.setState(state => (log),()=>this.props.callback(log));
   }
 
   render() {

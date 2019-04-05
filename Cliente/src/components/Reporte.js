@@ -15,6 +15,7 @@ class Reporte extends Component {
     this.retornarMapa = this.retornarMapa.bind(this)
     this.handleClick  = this.handleClick.bind(this) 
     this.cancelar  = this.cancelar.bind(this) 
+    this.mostrarBoton= this.mostrarBoton.bind(this)
   }
 
 
@@ -59,7 +60,12 @@ class Reporte extends Component {
       }
   }
 
-
+  mostrarBoton(){
+    console.log(this.state.disponible)
+    if(this.state.disponible!=='none'){
+      return(<button onClick={this.handleClick}>Reportar</button>);
+    }
+  }
 
   render() {
     return (
@@ -70,8 +76,8 @@ class Reporte extends Component {
           <option value="Ocupado" >Ocupado </option>
           <option value="Disponible">Disponible </option>
         </select><br></br>
-        {this.retornarMapa()}
-        <button onClick={this.handleClick}>Reportar</button>
+        {this.retornarMapa()}   
+        {this.mostrarBoton()}     
         <button onClick={this.cancelar}>Cancelar</button>
       </div>
     ); 

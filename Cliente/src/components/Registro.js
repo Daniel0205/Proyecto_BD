@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-
+import './Registro.css';
 
 class Registro extends Component {
   constructor(props) {
