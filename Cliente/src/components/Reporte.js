@@ -61,7 +61,6 @@ class Reporte extends Component {
   }
 
   mostrarBoton(){
-    console.log(this.state.disponible)
     if(this.state.disponible!=='none'){
       return(<button onClick={this.handleClick}>Reportar</button>);
     }
@@ -69,7 +68,7 @@ class Reporte extends Component {
 
   render() {
     return (
-      <div className="User">
+      <div className="User-Mapa">
         <h2>Estado Actual:</h2>
         <select name="estado" defaultValue ="Select" onChange={this.handleSelect}>
           <option value="Select" disabled>Selecciona su estado actual:</option>

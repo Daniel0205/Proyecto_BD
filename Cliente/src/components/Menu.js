@@ -16,6 +16,7 @@ class Menu extends Component {
         this.pagarViajes=this.pagarViajes.bind(this)
         this.solicitarViaje=this.solicitarViaje.bind(this)
         this.reportarEstado =this.reportarEstado.bind(this)
+        this.modificarDatos =this.modificarDatos.bind(this)
 
 
         if(this.props.user==="Conductor"){
@@ -65,6 +66,10 @@ class Menu extends Component {
         this.props.callback('Solicitud-Viaje');
     }
 
+    modificarDatos(){
+        this.props.callback('Datos-'+this.props.user);
+    }
+
     reportarEstado(){
         this.props.callback('Reporte');
     }
@@ -78,8 +83,9 @@ class Menu extends Component {
                 <div>
                     <div className='opciones'>
                         <h2>Seleccione una opcion:</h2>
-                        <button  >Modificar Datos</button>
+                        <button onClick={this.modificarDatos} >Modificar Datos</button>
                         <button onClick={this.reportarEstado} >Reportar Estado</button>
+                        <button  >Ver Viajes</button>
                         </div>
                         <div className='kilometros'>
                     <h2>Kilometros</h2>
@@ -97,8 +103,9 @@ class Menu extends Component {
                 <div>
                     <div className='opciones'>
                         <h2>Seleccione una opcion:</h2>
-                        <button  >Modificar Datos</button>
+                        <button  onClick={this.modificarDatos} >Modificar Datos</button>
                         <button  onClick={this.solicitarViaje} >Solicitar Viaje</button>
+                        <button  >Ver Viajes</button>
                         </div>
                         <div className='kilometros'>
                     <h2>Kilometros</h2>

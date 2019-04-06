@@ -71,6 +71,56 @@ app.post("/reporte", function (req, res) {
   console.log("Estado actualizado");
 });
 
+app.post("/insertarUser", function (req, res) {
+
+  res.json([{bool:true}]);
+
+  console.log(req.body)
+
+  console.log("Usuario insertado");
+});
+
+
+app.post("/actualizarDatos", function (req, res) {
+
+  res.json([{bool:true}]);
+
+  console.log(req.body)
+
+  console.log("Datos actualizados");
+});
+
+app.post("/getDatos", function (req, res) {
+
+  if(req.body.user==='Usuario'){
+    res.json([{
+      nombre:'Daniel Alejandro',
+      apellido:'Diaz Ocampo',
+      genero:'M',
+      direccion:'enrique segoviano :v'
+    }]);
+  }
+  else{
+    res.json([{
+      nombre:'Daniel Alejandro',
+      apellido:'Diaz Ocampo',
+      genero:'M',
+      direccion:'enrique segoviano :v',
+      placa:'ABCD 1234',
+      modelo:2015,
+      marca:'mazda',
+      baul:'G',
+      fecha:2015,
+      soat:"nose"
+    }]);
+  }
+  
+
+  console.log(req.body)
+
+  console.log("Datos Enviados");
+});
+
 app.listen(3001, function () {
   console.log("Example app listening on port 3001!");
 });

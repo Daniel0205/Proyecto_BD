@@ -91,9 +91,18 @@ class Content extends Component {
             <User URL= {taxistaLogo} msj="Conductor" callback={this.setPage}/>
           </div>
         </div>);
+
+      case 'Datos-Conductor':
+        return(
+          <Registro cellphone={this.state.cellphone} user="Conductor" tipo='Actualizar' callback={this.setPage}/>
+        );
+      case 'Datos-Usuario':
+        return(
+          <Registro cellphone={this.state.cellphone}  user="Usuario" tipo='Actualizar' callback={this.setPage}/>
+        );
       case 'Conductor':
         return(
-          <Registro user={this.state.pagina}/>
+          <Registro user={this.state.pagina} tipo='Registro' callback={this.setPage}/>
          );
       case 'Reporte':
           return(
@@ -101,7 +110,7 @@ class Content extends Component {
           );
       case 'Usuario':
         return(
-          <Registro user={this.state.pagina}/>
+          <Registro user={this.state.pagina} tipo='Registro' callback={this.setPage}/>
         );
       
       case 'Menu-Usuario':
