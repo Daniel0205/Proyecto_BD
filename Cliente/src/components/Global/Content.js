@@ -14,6 +14,7 @@ import Viaje from '../Viaje';
 import Menu from '../Menu';
 import Reporte from '../Reporte';
 import Calificacion from '../Calificacion';
+import ListaViajes from '../ListaViajes';
 
 
 class Content extends Component {
@@ -118,11 +119,18 @@ class Content extends Component {
           <Menu user="Usuario"  callback={this.setPage}/>
         );
 
+      case 'Viajes-Usuario':
+        return(
+          <ListaViajes cellphone={this.state.cellphone} user="Usuario" callback={this.setPage}/>
+        );
+      case 'Viajes-Conductor':
+        return(
+          <ListaViajes cellphone={this.state.cellphone} user="Conductor" callback={this.setPage}/>
+        );
       case 'Menu-Conductor':
         return(
           <Menu user="Conductor"  callback={this.setPage}/>
-        )
-
+        );
       case 'Solicitud-Viaje':
           return(
             <SolicitudViaje cellphone={this.state.cellphone} callback={this.getPosiciones}/>

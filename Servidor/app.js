@@ -32,6 +32,52 @@ app.post("/favoritos", function (req, res) {
   console.log(req.body)
 });
 
+app.post("/consultarViajes", function (req, res) {
+
+  if(req.user==="Usuario"){
+    res.json([{viajes:
+      [{id:1,
+      nombreChofer:"nsasgfsdf",
+      descripcionOrigen: "Univalle1",
+      descripcionDestino: "Univalle2",
+      fecha:"2015/05/2015",
+      pagado:true,
+      califiacion:2,
+      kmRecorridos:25,
+      },{id:2,
+      nombreChofer:"qwrwtertew",
+      descripcionOrigen: "Univalle2",
+      descripcionDestino: "Univalle3",
+      fecha:"2015/05/2015",
+      pagado:false,
+      califiacion:3,
+      kmRecorridos:155}]}]);
+  }
+  else{
+    res.json([{viajes:
+      [{id:1,
+      nombreCliente:"--------",
+      descripcionOrigen: "Univalle1",
+      descripcionDestino: "Univalle2",
+      fecha:"2015/05/2015",
+      pagado:true,
+      califiacion:2,
+      kmRecorridos:25,
+      },{id:2,
+      nombreCliente:"-----",
+      descripcionOrigen: "Univalle2",
+      descripcionDestino: "Univalle3",
+      fecha:"2015/05/2015",
+      pagado:false,
+      califiacion:3,
+      kmRecorridos:155}]}]);
+
+
+  }
+
+  console.log(req.body)
+});
+
 
 app.post("/encontrarConductor", function (req, res) {
 
