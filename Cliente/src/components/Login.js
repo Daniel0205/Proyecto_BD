@@ -67,6 +67,7 @@ class Login extends Component {
             onChange={this.onChange}
           />
           <p>Password:</p>
+          <i className="logo"></i>
           <input
             type="password"
             name="psw"

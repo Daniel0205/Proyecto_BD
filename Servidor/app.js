@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bo
 
 app.post("/login", function (req, res) {
   if (req.body.Username == "admin" && req.body.Password == "admin") {
-    res.json([{nombre:"daniel", user:"Usuario",login: true }]);
+    res.json([{nombre:"daniel", user:"Conductor",login: true }]);
   }
   else{
     res.json([{login: false }]);
