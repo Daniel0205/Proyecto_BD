@@ -20,16 +20,31 @@ class Viaje extends Component {
 
   aceptar(){
 
-    this.setState({
-      distancia:this.state.distancia,
-      pagina:'Calificacion'},()=>{
-        delete this.state.posicion;
-        delete this.state.placa;
-        delete this.state.nombreConductor;
-        delete this.state.encontrado;
-        delete this.state.estrellas;
-      this.props.callback(this.state)})
-    
+    fetch("/finalizarViaje", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state)
+    })
+    .then(res => res.json())
+    .then(res => {
+      if(res[0].bool){
+        console.log("Viaje guardado")
+      }
+      else {console.log("viaje sin guardar")}})
+    .then(()=>{
+      this.setState({
+        distancia:this.state.distancia,
+        pagina:'Calificacion'},()=>{
+          delete this.state.posicion;
+          delete this.state.placa;
+          delete this.state.nombreConductor;
+          delete this.state.encontrado;
+          delete this.state.estrellas;
+        this.props.callback(this.state)})
+    });   
   }
 
   cancelar(){

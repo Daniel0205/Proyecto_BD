@@ -1,3 +1,8 @@
+html {
+    background-color: rgba(255, 139, 0, 0.35);
+}
+
+
 .login p{
     color: white;
     font:   120% cursive;
@@ -10,7 +15,7 @@
     font:   120% cursive;
     margin-left: 25%;
     margin-right: 25%;
-    background-color: darkred;
+    background-color: rgba(255, 136, 0, 0.698);
     border-radius: 25px;
 }
 
@@ -55,6 +60,6 @@
     width: 50%;
     margin-left: 25%;
     margin-right: 25%;
-    background-color:darkred;
+    background-color: rgba(255, 136, 0, 0.698);
     border-radius: 25px;
 }

@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bo
 
 app.post("/login", function (req, res) {
   if (req.body.Username == "admin" && req.body.Password == "admin") {
-    res.json([{nombre:"daniel", user:"Conductor",login: true }]);
+    res.json([{nombre:"daniel", user:"Usuario",login: true }]);
   }
   else{
     res.json([{login: false }]);
@@ -34,7 +34,7 @@ app.post("/favoritos", function (req, res) {
 
 app.post("/consultarViajes", function (req, res) {
 
-  if(req.user==="Usuario"){
+  if(req.body.user==='Usuario'){
     res.json([{viajes:
       [{id:1,
       nombreChofer:"nsasgfsdf",
@@ -60,7 +60,7 @@ app.post("/consultarViajes", function (req, res) {
       descripcionOrigen: "Univalle1",
       descripcionDestino: "Univalle2",
       fecha:"2015/05/2015",
-      pagado:true,
+      cobrado:true,
       califiacion:2,
       kmRecorridos:25,
       },{id:2,
@@ -68,7 +68,7 @@ app.post("/consultarViajes", function (req, res) {
       descripcionOrigen: "Univalle2",
       descripcionDestino: "Univalle3",
       fecha:"2015/05/2015",
-      pagado:false,
+      cobrado:false,
       califiacion:3,
       kmRecorridos:155}]}]);
 
@@ -104,6 +104,7 @@ app.post("/finalizarViaje", function (req, res) {
 
   res.json([{bool:true}]);
 
+  console.log(req.body)
   console.log("Viaje guardado");
 });
 
@@ -143,7 +144,8 @@ app.post("/getDatos", function (req, res) {
       nombre:'Daniel Alejandro',
       apellido:'Diaz Ocampo',
       genero:'M',
-      direccion:'enrique segoviano :v'
+      direccion:'enrique segoviano :v',
+      tarjeta:451458745
     }]);
   }
   else{
@@ -151,7 +153,6 @@ app.post("/getDatos", function (req, res) {
       nombre:'Daniel Alejandro',
       apellido:'Diaz Ocampo',
       genero:'M',
-      direccion:'enrique segoviano :v',
       placa:'ABCD 1234',
       modelo:2015,
       marca:'mazda',

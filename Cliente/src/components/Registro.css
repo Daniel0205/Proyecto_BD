@@ -2,7 +2,7 @@ html {
     background-color: rgba(255, 139, 0, 0.35);
 }
 
-#datos-PersonalesUsuario {
+#datos-Personales-Usuario {
     position: absolute;
     align-content: center;
     background-color: rgba(255, 139, 0, 0.35);
@@ -14,7 +14,7 @@ html {
     margin-left: 35%;
 }
 
-#datos-PersonalesUsuario input {
+#datos-Personales-Usuario input {
     display: block;
     background: none;
     padding: 1px 5px 1px 5px;

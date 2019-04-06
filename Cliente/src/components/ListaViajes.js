@@ -39,7 +39,7 @@ class ListaViaje extends Component {
   render() {
 
     let viajes = this.state.viajes;
-    const viajesArray = viajes.map((x) => {return(<ConsultaViaje key={x.id} datos={x}/>)});
+    const viajesArray = viajes.map((x) => {return(<ConsultaViaje key={x.id} user={this.props.user} datos={x}/>)});
 
     return (
         <div>

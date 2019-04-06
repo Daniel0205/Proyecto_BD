@@ -110,7 +110,7 @@ class Menu extends Component {
                         <h2>Seleccione una opcion:</h2>
                         <button  onClick={this.modificarDatos} >Modificar Datos</button>
                         <button  onClick={this.solicitarViaje} >Solicitar Viaje</button>
-                        <button  >Ver Viajes</button>
+                        <button  onClick={this.verViajes}>Ver Viajes</button>
                         </div>
                         <div className='kilometros'>
                     <h2>Kilometros</h2>

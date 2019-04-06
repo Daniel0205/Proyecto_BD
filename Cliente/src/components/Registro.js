@@ -16,6 +16,7 @@ class Registro extends Component {
     this.getDatos = this.getDatos.bind(this);
     this.actualizarDatos = this.actualizarDatos.bind(this)
     this.enviarDatos = this.enviarDatos.bind(this)
+    this.cancelar = this.cancelar.bind(this)
 
   }
 
@@ -28,7 +29,6 @@ class Registro extends Component {
       nombre: '',
       apellido: '',
       genero: "Select" ,
-      direccion: '',
       placa: '',
       modelo: '',
       marca: '',
@@ -44,11 +44,25 @@ class Registro extends Component {
       nombre: '',
       apellido: '',
       genero: "Select",
-      direccion: ''})
+      direccion: '',
+      tarjeta:''})
     }
 
     if(this.props.tipo==='Actualizar'){this.getDatos();}
 
+  }
+
+  cancelar(){
+
+    let callback="";
+    if(this.props.tipo==='Actualizar'){
+      callback= "Menu-"+this.state.user
+    }
+    else{
+      callback = "Login"
+    }
+
+    this.props.callback(callback);
   }
 
   getDatos(){
@@ -137,6 +151,11 @@ class Registro extends Component {
           direccion:event.target.value
         })
       break;
+      case 'tarjeta':
+        this.setState({
+          tarjeta:event.target.value
+        })
+      break;
       case 'placa':
         this.setState({
           placa:event.target.value
@@ -179,9 +198,17 @@ class Registro extends Component {
       campo = <input type="text" name="cellphone" placeholder='Celular*' onChange={this.actualizarDatos} disabled value={this.state.cellphone}/>;
     }
 
-    const x = 'datos-Personales'+ this.state.user
+    let tarjeta = null;
+    if (this.props.user==="Usuario"){
+      tarjeta = [
+      <input type="text" name="direccion" placeholder='Direccion De Residencia' onChange={this.actualizarDatos}  value={this.state.direccion}/>,
+      <br></br>,
+      <input type="text" name="tarjeta" placeholder='Tarjeta de credito' onChange={this.actualizarDatos}  value={this.state.tarjeta}/>
+                ];
+    }
+    
     return(
-      <div id={x}>
+      <div id={'datos-Personales-'+ this.state.user}>
         <h1>Datos-Personales</h1>
         {campo}<br></br> 
         <input type="password" name="password" placeholder='Password*' onChange={this.actualizarDatos} value={this.state.password}/><br></br>
@@ -193,7 +220,7 @@ class Registro extends Component {
           <option value="F">Femenino</option>
           <option value="N">No Definido</option>
         </select><br></br>
-        <input type="text" name="direccion" placeholder='Direccion De Residencia' onChange={this.actualizarDatos}  value={this.state.direccion}/><br></br>
+        {tarjeta}<br></br>
       </div>);
   }
 
@@ -211,6 +238,7 @@ class Registro extends Component {
           <form className="form-Conductor" onSubmit={this.enviarDatos} >
             {this.datosPersonales()}
             <button>{boton}</button>
+            <button onClick={this.cancelar}>Cancelar</button>
           </form>
           
           </div>);
@@ -222,10 +250,7 @@ class Registro extends Component {
           allYears.push(2019 - x)
         }        
         const yearList = allYears.map((x) => {return(<option value={x} key={x}>{x}</option>)});
-        
-        console.log(this.state.baul)
-        console.log(this.state.baul==="Select2")
-        
+
         return (
           <div className='Registro'>
               <form className="form-Conductor" onSubmit={this.enviarDatos} >
@@ -249,6 +274,7 @@ class Registro extends Component {
                 </div>
                 <p>(*) Campos Obligatorios</p>
                 <button>{boton}</button>
+                <button onClick={this.cancelar}>Cancelar</button>
               </form>
               
             </div>
