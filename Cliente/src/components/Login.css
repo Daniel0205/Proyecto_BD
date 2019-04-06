@@ -7,6 +7,10 @@
     font:   120% cursive;
 }
 
+
+
+
+
 .form{
     height: 100%;
     width: 50%;
@@ -16,6 +20,7 @@
     margin-right: 25%;
     background-color:#ff9966;
     border-radius: 25px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 255, .2);
 }
 
 .form input{
@@ -61,4 +66,6 @@
     margin-right: 25%;
     background-color:#ff9966;
     border-radius: 25px;
+    padding: 10px; 
+    box-shadow: 5px 5px 5px rgba(0, 0, 255, .2);
 }

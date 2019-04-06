@@ -69,7 +69,7 @@ class Reporte extends Component {
 
   render() {
     return (
-      <div className="User">
+      <div className="User-Mapa">
         <h2>Estado Actual:</h2>
         <select name="estado" defaultValue ="Select" onChange={this.handleSelect}>
           <option value="Select" disabled>Selecciona su estado actual:</option>
