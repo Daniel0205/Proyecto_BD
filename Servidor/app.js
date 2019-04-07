@@ -1,5 +1,45 @@
 var express = require("express");
 var app = express();
+/*
+var pgp = require('pg-promise')(/*options)
+var db = pgp('postgres://postgres:1234@localhost:5432/NotThatEasyTaxi')
+*/
+
+const Pool = require('pg-pool');
+
+var config = {
+  user: 'postgres', //env var: PGUSER
+  database: 'NotThatEasyTaxi', //env var: PGDATABASE
+  password: '1234', //env var: PGPASSWORD
+  host: '127.0.0.1', // Server hosting the postgres database
+  port: 5432, //env var: PGPORT
+  max: 10, // max number of clients in the pool
+  idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+};
+
+const pool = new Pool(config);
+pool.on('error', function (err, client) {
+  // if an error is encountered by a client while it sits idle in the pool
+  // the pool itself will emit an error event with both the error and
+  // the client which emitted the original error
+  // this is a rare occurrence but can happen if there is a network partition
+  // between your application and the database, the database restarts, etc.
+  // and so you might want to handle it and at least log it out
+  console.error('idle client error', err.message, err.stack)
+})
+
+
+//export the query method for passing queries to the pool
+function query(text, values, callback) {
+  console.log('query:', text, values);
+  return pool.query(text, values, callback);
+};
+
+// the pool also supports checking out a client for
+// multiple operations, such as a transaction
+function connect(callback) {
+  return pool.connect(callback);
+};
 
 var bodyParser = require("body-parser"); // middleware  to handle HTTP POST request
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -10,24 +50,64 @@ app.post("/login", function (req, res) {
   if (req.body.Username == "admin" && req.body.Password == "admin") {
     res.json([{nombre:"daniel", user:"Conductor",login: true }]);
   }
-  else{
-    res.json([{login: false }]);
-  }
+
+	connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log('SELECT nombres FROM cliente WHERE celular = '+req.body.Username+' and contrasena = crypt(\''
+                +req.body.Password+'\',contrasena);');
+     client.query('SELECT nombres FROM cliente WHERE celular = '+req.body.Username+' and contrasena = crypt(\''
+     +req.body.Password+'\',contrasena);', 
+    function(err, result) {
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+
+      if(err) {
+          return console.error('error running query', err);
+      }
+
+      res.json([{nombre:result.rows[0].nombres, user:"Usuario",login:true}]);
+      //output: 1
+    });
+  });
+/*
+  db.one('SELECT * from conductor')
+  .then(function (data) {
+    console.log('DATA:', data)
+  })
+  .catch(function (error) {
+    console.log('ERROR:', error)
+  })*/
+
   console.log(req.body)
 });
 
 app.post("/favoritos", function (req, res) {
 
-  res.json([{favoritos:
-                [{longitud: 85412,
-                latitud: 4561541,
-                descripcion: "Univalle1"},
-                {longitud: 8546,
-                latitud: 78945,
-                descripcion: "Univalle2"},
-                {longitud: -45112,
-                latitud: -4561541,
-                descripcion: "Univalle3" }]}]);
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log('SELECT  ST_X(ST_AsText(id_pos)) as longitud, ST_Y(ST_AsText(id_pos)) as latitud ,direccion '
+     +'FROM cliente NATURAL JOIN favoritos NATURAL JOIN posicion WHERE celular = ' + req.body.Username);
+     client.query('SELECT  ST_X(ST_AsText(id_pos)) as longitud, ST_Y(ST_AsText(id_pos)) as latitud ,direccion '
+     +'FROM cliente NATURAL JOIN favoritos NATURAL JOIN posicion WHERE celular = ' + req.body.Username,
+    function(err, result) {
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+          return console.error('error running query', err);
+      }
+
+      res.json([{favoritos:result.rows}]);
+      //output: 1
+    });
+  });
 
   console.log(req.body)
 });
@@ -81,12 +161,43 @@ app.post("/consultarViajes", function (req, res) {
 
 app.post("/encontrarConductor", function (req, res) {
 
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log('SELECT * from conductor NATURAL JOIN posicion where celular=hallarConductor(\'POINT('+
+     req.body.longitudOrigen+' '+req.body.latitudOrigen+')\') and posicion_actual=id_pos')
+     client.query('SELECT * from conductor NATURAL JOIN posicion where celular=hallarConductor(\'POINT('+
+     req.body.longitudOrigen+' '+req.body.latitudOrigen+')\') and posicion_actual=id_pos',
+    function(err, result) {
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+        res.json([{encontrado: false }]);
+        //output: 1
+        return console.error('error running query', err);
+      }
+      else{
+        res.json([{nombreConductor:result.rows[0].nombres,
+          placa:result.rows[0].placa,
+          celularConductor:result.rows[0].celular,
+          estrellas:3,
+          posicion:result.rows[0].direccion,
+          encontrado: true }]);
+      }
+      //output: 1
+    });
+  });
+/*
   res.json([{nombreConductor:"Juan",
             placa:"ABC 1234",
             celularConductor: 3156661104,
             estrellas:3,
             posicion:"No se sabe",
-            encontrado: true }]);
+            encontrado: true }]);*/
 
 
   console.log(req.body)
@@ -94,7 +205,29 @@ app.post("/encontrarConductor", function (req, res) {
 
 app.post("/distancia", function (req, res) {
 
-  res.json([{distancia:19}]);
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log('SELECT distancia(\'POINT('+req.body.longitudOrigen+' '+req.body.latitudOrigen+
+                 ')\',\'POINT('+req.body.longitudDestino+' '+req.body.latitudDestino+')\')')
+     client.query('SELECT distancia(\'POINT('+req.body.longitudOrigen+' '+req.body.latitudOrigen+
+                  ')\',\'POINT('+req.body.longitudDestino+' '+req.body.latitudDestino+')\')',
+    function(err, result) {
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+          return console.error('error running query', err);
+      }
+
+      console.log(result.rows[0].distancia)
+
+      res.json([{distancia:result.rows[0].distancia}]);
+      //output: 1
+    });
+  });
 
 
   console.log(req.body)

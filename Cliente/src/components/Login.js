@@ -32,15 +32,16 @@ class Login extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        this.setState(res[0])
+        console.log(res)
+        this.setState(res[0],()=>{
         if(this.state.login){
           
           this.props.callback({
-            cellphone: "admin",
-            nombre: "daniel",
+            cellphone: this.state.cellphone,
+            nombre: this.state.nombre,
             pagina: "Menu-"+this.state.user
           });
-        }
+        }})
       });
   }
 

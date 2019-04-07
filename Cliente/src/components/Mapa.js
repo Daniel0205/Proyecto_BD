@@ -20,12 +20,15 @@ class Mapa extends React.Component {
     }
 
     handleClick(e){
-      this.setState({ currentPos: e.latlng });
-      console.log(this.state.currentPos);
+      this.setState({
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+        currentPos: e.latlng });
+      console.log(this.state);
 
       reverse.getReverse(this.state.currentPos.lat, this.state.currentPos.lng)
-	.then((location)=>{console.log(location.displayName)})
-	.catch(err=>{console.error(err)})
+	  .then((location)=>{console.log(location.displayName)})
+	  .catch(err=>{console.error(err)})
     }
     
     
