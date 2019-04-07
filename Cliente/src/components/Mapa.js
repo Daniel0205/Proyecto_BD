@@ -1,24 +1,31 @@
 import React  from 'react';
 import { Map , TileLayer, Marker, Popup } from 'react-leaflet';
-
 import './Mapa.css';
+
+const Geo = require('open-street-map-reverse-geo-node-client')
+const reverse = new Geo.ReverseGeocoder()
 
 
 class Mapa extends React.Component {
     constructor() {
-        super()
+        super()  
         this.state = {
-            lat: 51.505,
-            lng: -0.09,
-            zoom: 13,
+            lat: 3.375120,
+            lng: -76.537189,
+            zoom: 15,
             currentPos: null 
           }
           this.mandarPos = this.mandarPos.bind(this);
           this.handleClick = this.handleClick.bind(this);
     }
+
     handleClick(e){
       this.setState({ currentPos: e.latlng });
       console.log(this.state.currentPos);
+
+      reverse.getReverse(this.state.currentPos.lat, this.state.currentPos.lng)
+	.then((location)=>{console.log(location.displayName)})
+	.catch(err=>{console.error(err)})
     }
     
     
