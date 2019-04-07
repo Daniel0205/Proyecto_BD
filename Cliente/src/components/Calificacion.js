@@ -20,12 +20,7 @@ class Calificaion extends Component {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ 
-        longitudOrigen:this.state.longitudOrigen,
-        latitudOrigen:this.state.latitudOrigen,
-        longitudDestino:this.state.longitudDestino,
-        latitudDestino:this.state.latitudDestino,        
-      })
+      body: JSON.stringify(this.state)
     })
     .then(res => res.json())
     .then(res => {

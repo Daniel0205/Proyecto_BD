@@ -48,7 +48,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bo
 
 app.post("/login", function (req, res) {
   if (req.body.Username == "admin" && req.body.Password == "admin") {
-    res.json([{nombre:"daniel", user:"Conductor",login: true }]);
+    res.json([{nombre:"daniel", user:"Usuario",login: true }]);
   }
 
 	connect(function(err, client, done) {
@@ -87,25 +87,26 @@ app.post("/login", function (req, res) {
 
 app.post("/favoritos", function (req, res) {
 
+  let str ='SELECT  ST_X(ST_AsText(id_pos)) as longitud, ST_Y(ST_AsText(id_pos)) as latitud ,direccion '
+  +'FROM cliente NATURAL JOIN favoritos NATURAL JOIN posicion WHERE celular = ' + req.body.Username;
+
   connect(function(err, client, done) {
     if(err) {
         return console.error('error fetching client from pool', err);
         }
     //use the client for executing the query
-     console.log('SELECT  ST_X(ST_AsText(id_pos)) as longitud, ST_Y(ST_AsText(id_pos)) as latitud ,direccion '
-     +'FROM cliente NATURAL JOIN favoritos NATURAL JOIN posicion WHERE celular = ' + req.body.Username);
-     client.query('SELECT  ST_X(ST_AsText(id_pos)) as longitud, ST_Y(ST_AsText(id_pos)) as latitud ,direccion '
-     +'FROM cliente NATURAL JOIN favoritos NATURAL JOIN posicion WHERE celular = ' + req.body.Username,
-    function(err, result) {
+     console.log(str);
+     client.query(str,(err, result)=> {
       //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
       done(err);
 
       if(err) {
+          res.json([{favoritos:[]}]);
           return console.error('error running query', err);
       }
-
-      res.json([{favoritos:result.rows}]);
-      //output: 1
+      else{
+        res.json([{favoritos:result.rows}]);
+      }
     });
   });
 
@@ -161,23 +162,22 @@ app.post("/consultarViajes", function (req, res) {
 
 app.post("/encontrarConductor", function (req, res) {
 
+  let str = 'SELECT * from conductor NATURAL JOIN posicion where celular=hallarConductor(\'POINT('+
+  req.body.longitudOrigen+' '+req.body.latitudOrigen+')\') and posicion_actual=id_pos';
 
   connect(function(err, client, done) {
     if(err) {
         return console.error('error fetching client from pool', err);
         }
     //use the client for executing the query
-     console.log('SELECT * from conductor NATURAL JOIN posicion where celular=hallarConductor(\'POINT('+
-     req.body.longitudOrigen+' '+req.body.latitudOrigen+')\') and posicion_actual=id_pos')
-     client.query('SELECT * from conductor NATURAL JOIN posicion where celular=hallarConductor(\'POINT('+
-     req.body.longitudOrigen+' '+req.body.latitudOrigen+')\') and posicion_actual=id_pos',
-    function(err, result) {
+     console.log(str)
+     client.query(str,(err, result)=> {
       //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
       done(err);
 
       if(err) {
         res.json([{encontrado: false }]);
-        //output: 1
+      
         return console.error('error running query', err);
       }
       else{
@@ -188,54 +188,77 @@ app.post("/encontrarConductor", function (req, res) {
           posicion:result.rows[0].direccion,
           encontrado: true }]);
       }
-      //output: 1
+      
     });
   });
-/*
-  res.json([{nombreConductor:"Juan",
-            placa:"ABC 1234",
-            celularConductor: 3156661104,
-            estrellas:3,
-            posicion:"No se sabe",
-            encontrado: true }]);*/
-
-
   console.log(req.body)
 });
 
 app.post("/distancia", function (req, res) {
+
+  let str = 'SELECT distancia(\'POINT('+req.body.longitudOrigen+' '+req.body.latitudOrigen+
+  ')\',\'POINT('+req.body.longitudDestino+' '+req.body.latitudDestino+')\')';
 
   connect(function(err, client, done) {
     if(err) {
         return console.error('error fetching client from pool', err);
         }
     //use the client for executing the query
-     console.log('SELECT distancia(\'POINT('+req.body.longitudOrigen+' '+req.body.latitudOrigen+
-                 ')\',\'POINT('+req.body.longitudDestino+' '+req.body.latitudDestino+')\')')
-     client.query('SELECT distancia(\'POINT('+req.body.longitudOrigen+' '+req.body.latitudOrigen+
-                  ')\',\'POINT('+req.body.longitudDestino+' '+req.body.latitudDestino+')\')',
-    function(err, result) {
+     console.log(str)
+     client.query(str,(err, result) =>{
       //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
       done(err);
 
       if(err) {
           return console.error('error running query', err);
       }
-
-      console.log(result.rows[0].distancia)
-
-      res.json([{distancia:result.rows[0].distancia}]);
-      //output: 1
+      else{
+        res.json([{distancia:result.rows[0].distancia}]);
+      }
     });
   });
-
 
   console.log(req.body)
 });
 
 app.post("/finalizarViaje", function (req, res) {
 
-  res.json([{bool:true}]);
+  let str = 'SELECT insertarPunto(\'POINT('+req.body.longitudOrigen+' '+req.body.latitudOrigen+')\',\''+req.body.descripcionOrigen+'\')';
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log(str)
+     client.query(str,(err, result) =>{
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      console.log(result)
+    });
+
+    str = 'SELECT insertarPunto(\'POINT('+req.body.longitudDestino+' '+req.body.latitudDestino+')\',\''+req.body.descripcionDestino+'\')';
+    console.log(str)
+    client.query(str,(err, result) =>{
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      console.log(result)
+    });
+
+    str = 'INSERT INTO viajes(celular_cliente,celular_conductor,id_pos_origen,id_pos_destino,fecha,pagado,calificacion)'+ 
+          'VALUES ('+req.body.cellphone+','+req.body.celularConductor+',\'POINT('+req.body.longitudOrigen+' '+req.body.latitudOrigen+
+          ')\',\'POINT('+req.body.longitudDestino+' '+req.body.latitudDestino+')\',current_Date,false,'+req.body.calificacion+') RETURNING *';
+
+    console.log(str)
+    client.query(str,(err, result) =>{
+
+      console.log(err)
+      console.log(result)
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+    });
+
+    res.json([{bool:true}]);
+
+  });
 
   console.log(req.body)
   console.log("Viaje guardado");
