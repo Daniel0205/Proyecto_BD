@@ -6,9 +6,11 @@ class Reporte extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        cellphone:this.props.cellphone,
         disponible:"none",
         longitud:'',
-        latitud:''
+        latitud:'',
+        descripcion:''
     };  
 
     this.handleSelect = this.handleSelect.bind(this)
@@ -16,6 +18,12 @@ class Reporte extends Component {
     this.handleClick  = this.handleClick.bind(this) 
     this.cancelar  = this.cancelar.bind(this) 
     this.mostrarBoton= this.mostrarBoton.bind(this)
+    this.actualizar =this.actualizar.bind(this)
+  }
+
+  actualizar(e){
+
+    this.setState(e)
   }
 
 
@@ -54,8 +62,13 @@ class Reporte extends Component {
       if(this.state.disponible==="Disponible"){
           return (
           <div className='mapa'>
+<<<<<<< HEAD
             <h5>Porfavor informe de su ubicacion actual:</h5>
             <Mapa/>
+=======
+            <h2>Porfavor informe de su ubicacion actual</h2>
+            <Mapa callback={this.actualizar}/>
+>>>>>>> ba75cf206d2cd46d51c2624023851bc58cc8757c
           </div>)
       }
   }
@@ -67,6 +80,8 @@ class Reporte extends Component {
   }
 
   render() {
+
+    console.log(this.state)
     return (
       <div className="User-Mapa">
         <h2>Reporte de estado actual del chofer</h2>

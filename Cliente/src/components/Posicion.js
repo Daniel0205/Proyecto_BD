@@ -11,7 +11,8 @@ class Posicion extends Component {
             cellphone: this.props.cellphone,
             tipo:this.props.tipo,
             seleccion:'',
-            favoritos:[]
+            favoritos:[],
+            check:false
         };    
 
         this.handleChange = this.handleChange.bind(this);
@@ -19,6 +20,8 @@ class Posicion extends Component {
         this.getFavoritos = this.getFavoritos.bind(this);
         this.handleSelectFav = this.handleSelectFav.bind(this);
         this.sacarInformacion = this.sacarInformacion.bind(this);
+        this.setPosition = this.setPosition.bind(this)
+        this.handleCheck =this.handleCheck.bind(this)
         this.getFavoritos();
       }
     
@@ -42,11 +45,11 @@ class Posicion extends Component {
           body: JSON.stringify({ Username: this.state.cellphone})
         })
           .then(res => res.json())
-          .then(res => this.setState({favoritos:res[0].favoritos}))
+          .then(res => this.setState({favoritos:res[0].favoritos},console.log(this.state)))
           .then(res => {
               this.setState({
                   favoritos:this.state.favoritos.map((x) => 
-                  {return(<option value={[x.longitud,x.latitud,x.descripcion]} key={x.latitud}>{x.descripcion}</option>)}
+                  {return(<option value={[x.longitud,x.latitud,x.direccion]} key={[x.latitud,x.longitud]}>{x.direccion}</option>)}
                   )})
                 });
 
@@ -80,7 +83,8 @@ class Posicion extends Component {
                 longitudOrigen:this.sacarInformacion(event.target.value,1),
                 latitudOrigen:this.sacarInformacion(event.target.value,2),
                 descripcionOrigen:this.sacarInformacion(event.target.value,3),
-                tipo:this.state.tipo
+                tipo:this.state.tipo,
+                favoritosOrigen:false
             })    
         }
         else{
@@ -88,21 +92,57 @@ class Posicion extends Component {
                 longitudDestino:this.sacarInformacion(event.target.value,1),
                 latitudDestino:this.sacarInformacion(event.target.value,2),
                 descripcionDestino:this.sacarInformacion(event.target.value,3),
-                tipo:this.state.tipo
+                tipo:this.state.tipo,
+                favoritosDestino:false
             })
         }         
     }
 
+    setPosition(event){
+            
+        if(this.state.tipo==="origen"){
+            this.props.callback({
+                longitudOrigen:event.longitud,
+                latitudOrigen:event.latitud,
+                descripcionOrigen:event.descripcion,
+                tipo:this.state.tipo,
+                favoritosOrigen:this.state.check
+            })    
+        }
+        else{
+            this.props.callback({
+                longitudDestino:event.longitud,
+                latitudDestino:event.latitud,
+                descripcionDestino:event.descripcion,
+                tipo:this.state.tipo,
+                favoritosDestino:this.state.check
+            })
+        }         
+    }
+
+    handleCheck(event){
+
+        this.setState({check:!this.state.check})
+    }
+
     render() {    
+        console.log(this.state)
 
         switch(this.state.seleccion){
             case "mapa":
             return ( 
                 <div className={this.state.tipo}>
+<<<<<<< HEAD
                     <h3>Ingrese {this.props.tipo}</h3>
                     <input type="radio"  value="mapa" checked={true} onChange={this.handleChange}/> Seleccionar del mapa<br></br>
                     <input type="checkbox"  value="add-fav"/> Agregar a favoritos<br></br>
                     <Mapa />
+=======
+                    <h1>Ingrese {this.props.tipo}</h1>
+                    <input type="checkbox" onChange={this.handleCheck} checked={this.state.check} value="add-fav"/> Agregar a favoritos<br></br>
+                    <input type="radio"  value="mapa" checked={true} onChange={this.handleChange}/> Seleccionar del mapa<br></br>
+                    <Mapa callback={this.setPosition} />
+>>>>>>> ba75cf206d2cd46d51c2624023851bc58cc8757c
                     <input type="radio"  value="favoritos" checked={false} onChange={this.handleChange}/>Seleccionar de favoritos<br></br>
 
                 </div>);

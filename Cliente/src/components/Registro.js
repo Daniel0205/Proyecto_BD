@@ -54,6 +54,8 @@ class Registro extends Component {
 
   }
 
+
+
   cancelar(){
 
     let callback="";
@@ -86,8 +88,8 @@ class Registro extends Component {
 
 
 
-  enviarDatos(event){
-    event.preventDefault();
+  enviarDatos(){
+    
     // eslint-disable-next-line
     let ruta = "" , msj = "",callback="";
     if(this.props.tipo==='Actualizar'){
@@ -297,17 +299,15 @@ class Registro extends Component {
       case 'Usuario':
         return(
           <div className='prp'>
-          <form className="form-Conductor" onSubmit={this.enviarDatos} >
             <div className='pane'>
               {this.datosPersonales()}
             </div>
-          </form>
 
             <div>
               <p id='co1' >(*) Campos Obligatorios</p>
             </div>
             <div>
-              <button id='r3' >{boton}</button>
+              <button id='r3' onClick={this.enviarDatos}>{boton}</button>
               <button onClick={this.cancelar}>Cancelar</button>
             </div>
           </div>
@@ -318,9 +318,43 @@ class Registro extends Component {
           return(
             <div className='prp'>
 
+<<<<<<< HEAD
             <div className='pane'>
               {this.datosPersonalesC()}
               {this.cambiarAuto()}
+=======
+        let allYears = [];
+        for(let x = 0; x <= 39; x++) {
+          allYears.push(2019 - x)
+        }        
+        const yearList = allYears.map((x) => {return(<option value={x} key={x}>{x}</option>)});
+
+        return (
+          <div className='Registro'>
+              
+                {this.datosPersonales()}
+                <div>
+                  <h1>Datos del Automovil</h1>
+                  <input type="text" name="placa" placeholder='Placa*' value={this.state.placa} onChange={this.actualizarDatos}/><br></br>
+                  <input type="password" name="modelo" placeholder='Modelo*'value={this.state.modelo} onChange={this.actualizarDatos}/><br></br>
+                  <input type="text" name="marca" placeholder='Marca*'value={this.state.marca} onChange={this.actualizarDatos}/><br></br>
+                  <select name="baul"  onChange={this.actualizarDatos} value ={this.state.baul}>
+                    <option value="Select2" disabled>Selecciona un tipo de baul:</option>
+                    <option value="G">Grande</option>
+                    <option value="P">Pequeno</option>
+                    <option value="N">No tiene</option>
+                  </select><br></br>
+                  <select name="year" value ={this.state.fecha} onChange={this.actualizarDatos}>
+                    <option value="Select1" disabled>Selecciona una fecha de fabricacion:</option>
+                    {yearList}
+                  </select><br></br>
+                  <input type="text" name="soat" placeholder='Soat'value={this.state.soat} onChange={this.actualizarDatos}/><br></br>
+                </div>
+                <p>(*) Campos Obligatorios</p>
+                <button onClick={this.enviarDatos}>{boton}</button>
+                <button onClick={this.cancelar}>Cancelar</button>
+             
+>>>>>>> ba75cf206d2cd46d51c2624023851bc58cc8757c
             </div>
         
 

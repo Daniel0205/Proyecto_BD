@@ -10,60 +10,122 @@ class Menu extends Component {
 
     constructor(props){
         super(props)    
+        if(this.props.user==="Conductor"){
+            this.state={
+                kmtransp:0,
+                kmCobrar:0
+            }
+        }
+        else{
+            this.state={
+                kmUsados:0,
+                kmPagar:0
+            }
+        }
 
         this.calcularKmUsados=this.calcularKmUsados.bind(this)
         this.calcularKmPagar=this.calcularKmPagar.bind(this)
-        this.calcularKmTransp=this.calcularKmTransp.bind(this)
-        this.consultarKmCobrar=this.consultarKmCobrar.bind(this)
-        this.cobrarViajes=this.cobrarViajes.bind(this)
-        this.pagarViajes=this.pagarViajes.bind(this)
+        this.cobrarPagarViajes=this.cobrarPagarViajes.bind(this)
         this.solicitarViaje=this.solicitarViaje.bind(this)
         this.reportarEstado =this.reportarEstado.bind(this)
         this.modificarDatos =this.modificarDatos.bind(this)
         this.verViajes =this.verViajes.bind(this)
-
-
-        if(this.props.user==="Conductor"){
-            this.window={
-                kmtransp:this.calcularKmTransp(),
-                kmCobrar:this.consultarKmCobrar()               
-            }
-        }
-        else{
-            this.window={
-                kmUsados:this.calcularKmUsados(),
-                kmPagar:this.calcularKmPagar()              
-            }
-        }
-
+        
+        this.calcularKmUsados();
+        this.calcularKmPagar();
     }
 
     calcularKmPagar(){
-        return 100
+        fetch("/KmPagarCobrar", {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                Username: this.props.cellphone,
+                tipo:this.props.user
+            })
+          })
+          .then(res => res.json())
+          .then(res => {
+              console.log(res)
+              if(res[0].bool){
+                if(this.props.user==="Conductor"){
+                    this.setState({
+                        kmCobrar:res[0].km
+                    })
+                }
+                else{
+                    this.setState({
+                        kmPagar:res[0].km
+                    }); 
+                }
+              }
+              else console.log('km no calculados')              
+            });
     }
 
     calcularKmUsados(){
-        return 200
+        fetch("/KmUsados", {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                Username: this.props.cellphone,
+                tipo:this.props.user
+            })
+          })
+          .then(res => res.json())
+          .then(res => {
+              if(res[0].bool){
+                if(this.props.user==="Conductor"){
+                    this.setState({
+                        kmtransp:res[0].km
+                    })
+                }
+                else{
+                    this.setState({
+                        kmUsados:res[0].km
+                    }); 
+                }
+              }
+              else console.log('km no calculados')              
+            });
     }
 
-    calcularKmTransp(){
-        return 300
-    }
+    cobrarPagarViajes(){
 
-    consultarKmCobrar(){
-        return 400
-    }
-
-    cobrarViajes(){
-        this.window.kmCobrar=0
-        
-        this.forceUpdate()
-    }
-
-    pagarViajes(){
-        this.window.kmPagar=0
-        
-        this.forceUpdate()
+        fetch("/PagarCobrar", {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                Username: this.props.cellphone,
+                tipo:this.props.user
+            })
+          })
+          .then(res => res.json())
+          .then(res => {
+              console.log(res)
+              if(res[0].bool){
+                if(this.props.user==="Conductor"){
+                    this.setState({
+                        kmCobrar:0
+                    })
+                }
+                else{
+                    this.setState({
+                        kmPagar:0
+                    }); 
+                }
+              }
+              else console.log('Accion no realizada')              
+            });
     }
 
     solicitarViaje(){
@@ -107,10 +169,10 @@ class Menu extends Component {
                     <div className='kilometros'>
                         <h2 id="kp">Kilometros</h2>
                         <p className="ks">Kilometros transportados:</p>
-                        <p className="ks">{this.window.kmtransp} Km</p>
+                        <p className="ks">{this.state.kmtransp} Km</p>
                         <p className="ks">Kilometros a cobrar:</p>
-                        <p className="ks">{this.window.kmCobrar} Km</p>
-                        <button onClick={this.cobrarViajes} >Cobrar Viajes</button>
+                        <p className="ks">{this.state.kmCobrar} Km</p>
+                        <button onClick={this.cobrarPagarViajes} >Cobrar Viajes</button>
                     </div>
                 </div>
             );            
@@ -135,10 +197,10 @@ class Menu extends Component {
                     <div className='kilometros'>
                         <h2 id="kp">Kilometros</h2>
                         <p className="ks">Kilometros Usados:</p>
-                        <p className="ks">{this.window.kmUsados} Km</p>
+                        <p className="ks">{this.state.kmUsados} Km</p>
                         <p className="ks">Kilometros a Pagar:</p>
-                        <p className="ks">{this.window.kmPagar} Km</p>
-                        <button onClick={this.pagarViajes}   >Pagar Viajes</button>
+                        <p className="ks">{this.state.kmPagar} Km</p>
+                        <button onClick={this.cobrarPagarViajes}   >Pagar Viajes</button>
                     </div>
                 </div>
                 

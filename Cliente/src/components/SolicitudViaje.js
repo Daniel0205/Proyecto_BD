@@ -32,7 +32,9 @@ class SolicitudViaje extends Component {
       longitudDestino:this.state.longitudDestino,
       latitudDestino:this.state.latitudDestino,
       descripcionDestino:this.state.descripcionDestino,
-      pagina:'Viaje'
+      pagina:'Viaje',
+      favoritosDestino:this.state.favoritosDestino,
+      favoritosOrigen:this.state.favoritosOrigen,
     });
   }
 
@@ -54,6 +56,7 @@ class SolicitudViaje extends Component {
 
 
   render() {
+    console.log(this.state)
     return(
         <div className="prinv">
             <div className='soli'>
