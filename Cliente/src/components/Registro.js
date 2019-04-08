@@ -9,6 +9,7 @@ class Registro extends Component {
       user:this.props.user,
       cellphone: this.props.cellphone,
       password: '',
+      autosDisponibles:[]
     };
 
 
@@ -20,6 +21,7 @@ class Registro extends Component {
     this.cancelar = this.cancelar.bind(this)
     this.datosPersonalesC = this.datosPersonalesC.bind(this);
     this.cambiarAuto = this.cambiarAuto.bind(this);
+    
   }
 
   componentDidMount(){
@@ -50,11 +52,13 @@ class Registro extends Component {
       tarjeta:''})
     }
 
-    if(this.props.tipo==='Actualizar'){this.getDatos();}
+    if(this.props.tipo==='Actualizar'){
+      this.getDatos("/getDatos");
+      this.getDatos("/getAutos");
+
+    }
 
   }
-
-
 
   cancelar(){
 
@@ -69,8 +73,8 @@ class Registro extends Component {
     this.props.callback(callback);
   }
 
-  getDatos(){
-    fetch("/getDatos", {
+  getDatos(ruta){
+    fetch(ruta, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -125,6 +129,13 @@ class Registro extends Component {
   actualizarDatos(event){
 
     switch (event.target.name){
+      case 'auto':
+        var found = this.state.autosDisponibles.find(function(element) {
+          return element.placa===event.target.value;
+        });
+        console.log(found)
+        this.setState(found)
+      break;
       case 'cellphone':
         this.setState({
           cellphone:event.target.value
@@ -256,7 +267,7 @@ class Registro extends Component {
       <div id='datos-Auto'>
         <h4>Datos del Automovil</h4>
         <input type="text" name="placa" placeholder='Placa*' value={this.state.placa} onChange={this.actualizarDatos}/><br></br>
-        <input type="password" name="modelo" placeholder='Modelo*'value={this.state.modelo} onChange={this.actualizarDatos}/><br></br>
+        <input type="text" name="modelo" placeholder='Modelo*'value={this.state.modelo} onChange={this.actualizarDatos}/><br></br>
         <input type="text" name="marca" placeholder='Marca*'value={this.state.marca} onChange={this.actualizarDatos}/><br></br>
         <select name="baul"  onChange={this.actualizarDatos} value ={this.state.baul}><br></br>
         <option value="Select2" disabled>Selecciona un tipo de baul:</option>
@@ -275,15 +286,30 @@ class Registro extends Component {
   }
 
   cambiarAuto(){
+    const placas = this.state.autosDisponibles.map((x) => {return(<option value={x.placa} key={x.placa}>{x.placa}</option>)});
     return(
       <div id='cambiar'>
         <p>Autos disponibles por si deseas cambiar:</p>
-        <select name="auto"  onChange={this.actualizarDatos} value ={this.state.placa}><br></br>
-        <option value="Select3" disabled>Selecciona una placa:</option>
-          <option value="G">FDE142</option>
-          <option value="P">WEA753</option>
-          <option value="N">HDA123</option>
+        <p>Placas Disponibles: </p>
+        <select name="auto"  onChange={this.actualizarDatos} value ={this.state.placa}>
+        {placas}
         </select><br></br>
+        <p>Modelo: </p>
+        <input type="text" name="modelo" placeholder='Modelo*'value={this.state.modelo} readOnly/><br></br>
+        <p>Marca: </p>
+        <input type="text" name="marca" placeholder='Marca*'value={this.state.marca} readOnly/><br></br>
+        <p>Baul: </p>
+        <select name="baul" readOnly value ={this.state.baul}>
+          <option value="G" >Grande</option>
+          <option value="P" >Pequeno</option>
+          <option value="N" >No tiene</option>
+        </select><br></br>
+        <p>Ano de fabricacion: </p>
+        <select name="year" value ={this.state.fecha} readOnly>
+          <option value={this.state.fecha}>{this.state.fecha}</option>
+        </select><br></br>
+        <p>Soat: </p>
+        <input type="text" name="soat" placeholder='Soat'value={this.state.soat} readOnly/><br></br>
       </div>
     );
   }
@@ -294,6 +320,8 @@ class Registro extends Component {
     if(this.props.tipo==='Actualizar'){      
       boton = "Actualizar Datos";
     }
+
+    console.log(this.state)
 
     switch(this.state.user){
       case 'Usuario':
@@ -328,7 +356,7 @@ class Registro extends Component {
               <p id='co2' >(*) Campos Obligatorios</p>
             </div>
             <div>
-              <button id='r' >{boton}</button>
+              <button id='r' onClick={this.enviarDatos}>{boton}</button>
               <button id='r2' onClick={this.cancelar}>Cancelar</button>
             </div>
           </div>
