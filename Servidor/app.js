@@ -73,14 +73,6 @@ app.post("/login", function (req, res) {
       //output: 1
     });
   });
-/*
-  db.one('SELECT * from conductor')
-  .then(function (data) {
-    console.log('DATA:', data)
-  })
-  .catch(function (error) {
-    console.log('ERROR:', error)
-  })*/
 
   console.log(req.body)
 });
@@ -157,45 +149,6 @@ app.post("/consultarViajes", function (req, res) {
       
     });
   });
-/* if(req.body.user==='Usuario'){
-    res.json([{viajes:
-      [{id:1,
-      nombreChofer:"nsasgfsdf",
-      descripcionOrigen: "Univalle1",
-      descripcionDestino: "Univalle2",
-      fecha:"2015/05/2015",
-      pagado:true,
-      califiacion:2,
-      kmRecorridos:25,
-      },{id:2,
-      nombreChofer:"qwrwtertew",
-      descripcionOrigen: "Univalle2",
-      descripcionDestino: "Univalle3",
-      fecha:"2015/05/2015",
-      pagado:false,
-      califiacion:3,
-      kmRecorridos:155}]}]);
-  }
-  else{
-    res.json([{viajes:
-      [{id:1,
-      nombreCliente:"--------",
-      descripcionOrigen: "Univalle1",
-      descripcionDestino: "Univalle2",
-      fecha:"2015/05/2015",
-      cobrado:true,
-      califiacion:2,
-      kmRecorridos:25,
-      },{id:2,
-      nombreCliente:"-----",
-      descripcionOrigen: "Univalle2",
-      descripcionDestino: "Univalle3",
-      fecha:"2015/05/2015",
-      cobrado:false,
-      califiacion:3,
-      kmRecorridos:155}]}]);*/
-
-
   
 
   console.log(req.body)
@@ -262,6 +215,43 @@ app.post("/distancia", function (req, res) {
 
   console.log(req.body)
 });
+
+app.post("/PagarCobrar", function (req, res) {
+
+  
+  let str ='';
+  if(req.body.tipo=="Conductor"){
+    str='UPDATE conductor_viajes SET cobrado=true WHERE cobrado=false AND celular_conductor='+req.body.Username ;
+  }
+  else {
+    str='UPDATE viajes SET pagado=true WHERE pagado=false AND celular_cliente='+req.body.Username;
+  }
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log(str)
+     client.query(str,(err, result) =>{
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+        res.json([{bool:true}]);
+        return console.error('error running query', err);
+      }
+      else{
+        res.json([{bool:true}]);
+      }
+    });
+  });
+
+  console.log(req.body)
+});
+
+
+
 
 app.post("/finalizarViaje", function (req, res) {
 

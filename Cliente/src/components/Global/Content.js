@@ -116,7 +116,7 @@ class Content extends Component {
       
       case 'Menu-Usuario':
         return(
-          <Menu user="Usuario"  callback={this.setPage}/>
+          <Menu user="Usuario"  cellphone={this.state.cellphone} callback={this.setPage}/>
         );
 
       case 'Viajes-Usuario':
@@ -129,7 +129,7 @@ class Content extends Component {
         );
       case 'Menu-Conductor':
         return(
-          <Menu user="Conductor"  callback={this.setPage}/>
+          <Menu user="Conductor" cellphone={this.state.cellphone} callback={this.setPage}/>
         );
       case 'Solicitud-Viaje':
           return(
