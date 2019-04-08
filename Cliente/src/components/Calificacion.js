@@ -34,7 +34,7 @@ class Calificaion extends Component {
       this.props.callback({
         pagina:"Menu-Usuario",
         cellphone:this.state.cellphone,
-        nombre:this.state.nombre})});
+        })});
   }
 
   seleccionar(event){

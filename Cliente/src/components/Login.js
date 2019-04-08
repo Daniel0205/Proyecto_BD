@@ -33,14 +33,14 @@ class Login extends Component {
       .then(res => res.json())
       .then(res => {
         this.setState(res[0],()=>{
-        if(this.state.login){
-          
-          this.props.callback({
-            cellphone: this.state.cellphone,
-            nombre: this.state.nombre,
-            pagina: "Menu-"+this.state.user
-          });
-        }})
+          console.log(res[0])
+          if(this.state.login){
+            
+            this.props.callback({
+              cellphone: this.state.cellphone,
+              pagina: "Menu-"+this.state.user
+            });
+          }})
       });
   }
 

@@ -10,10 +10,7 @@ class ConsultaViaje extends Component {
     if (this.props.user==="Usuario"){
         nombre =  <p>Nombre Del chofer: {this.props.datos.nombrechofer}</p>
     }
-<<<<<<< HEAD
-=======
     else{ nombre =  <p>Nombre Del cliente: {this.props.datos.nombrecliente}</p>}
->>>>>>> ba75cf206d2cd46d51c2624023851bc58cc8757c
 
 
     let pago = null,msj='';
@@ -39,12 +36,8 @@ class ConsultaViaje extends Component {
             <p>Precio del viaje: ${this.props.datos.kmrecorridos*1500}</p>
             <p>Fecha: {this.props.datos.fecha}</p>
             {pago}
-<<<<<<< HEAD
-            <p>Calificacion: {this.props.datos.califiacion}</p>
-=======
             <p>Calificacion: {this.props.datos.calificacion}</p>
             <br></br>
->>>>>>> ba75cf206d2cd46d51c2624023851bc58cc8757c
         </div>
 
     ); 

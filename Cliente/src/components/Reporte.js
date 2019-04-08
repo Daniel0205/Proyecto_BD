@@ -62,13 +62,8 @@ class Reporte extends Component {
       if(this.state.disponible==="Disponible"){
           return (
           <div className='mapa'>
-<<<<<<< HEAD
-            <h5>Porfavor informe de su ubicacion actual:</h5>
-            <Mapa/>
-=======
-            <h2>Porfavor informe de su ubicacion actual</h2>
+            <h5>Porfavor informe de su ubicacion actual</h5>
             <Mapa callback={this.actualizar}/>
->>>>>>> ba75cf206d2cd46d51c2624023851bc58cc8757c
           </div>)
       }
   }

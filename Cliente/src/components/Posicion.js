@@ -132,17 +132,10 @@ class Posicion extends Component {
             case "mapa":
             return ( 
                 <div className={this.state.tipo}>
-<<<<<<< HEAD
                     <h3>Ingrese {this.props.tipo}</h3>
                     <input type="radio"  value="mapa" checked={true} onChange={this.handleChange}/> Seleccionar del mapa<br></br>
-                    <input type="checkbox"  value="add-fav"/> Agregar a favoritos<br></br>
-                    <Mapa />
-=======
-                    <h1>Ingrese {this.props.tipo}</h1>
                     <input type="checkbox" onChange={this.handleCheck} checked={this.state.check} value="add-fav"/> Agregar a favoritos<br></br>
-                    <input type="radio"  value="mapa" checked={true} onChange={this.handleChange}/> Seleccionar del mapa<br></br>
                     <Mapa callback={this.setPosition} />
->>>>>>> ba75cf206d2cd46d51c2624023851bc58cc8757c
                     <input type="radio"  value="favoritos" checked={false} onChange={this.handleChange}/>Seleccionar de favoritos<br></br>
 
                 </div>);
