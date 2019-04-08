@@ -52,6 +52,8 @@ class Registro extends Component {
 
   }
 
+
+
   cancelar(){
 
     let callback="";
@@ -84,8 +86,8 @@ class Registro extends Component {
 
 
 
-  enviarDatos(event){
-    event.preventDefault();
+  enviarDatos(){
+    
     // eslint-disable-next-line
     let ruta = "" , msj = "",callback="";
     if(this.props.tipo==='Actualizar'){
@@ -235,11 +237,11 @@ class Registro extends Component {
       case 'Usuario':
         return(
           <div className='Registro'>
-          <form className="form-Conductor" onSubmit={this.enviarDatos} >
+
             {this.datosPersonales()}
-            <button>{boton}</button>
+            <button onClick={this.enviarDatos}>{boton}</button>
             <button onClick={this.cancelar}>Cancelar</button>
-          </form>
+
           
           </div>);
       case 'Conductor':
@@ -253,7 +255,7 @@ class Registro extends Component {
 
         return (
           <div className='Registro'>
-              <form className="form-Conductor" onSubmit={this.enviarDatos} >
+              
                 {this.datosPersonales()}
                 <div>
                   <h1>Datos del Automovil</h1>
@@ -273,10 +275,9 @@ class Registro extends Component {
                   <input type="text" name="soat" placeholder='Soat'value={this.state.soat} onChange={this.actualizarDatos}/><br></br>
                 </div>
                 <p>(*) Campos Obligatorios</p>
-                <button>{boton}</button>
+                <button onClick={this.enviarDatos}>{boton}</button>
                 <button onClick={this.cancelar}>Cancelar</button>
-              </form>
-              
+             
             </div>
         );
         

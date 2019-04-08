@@ -107,7 +107,7 @@ class Content extends Component {
          );
       case 'Reporte':
           return(
-            <Reporte callback={this.setPage}/>
+            <Reporte  cellphone={this.state.cellphone} callback={this.setPage}/>
           );
       case 'Usuario':
         return(

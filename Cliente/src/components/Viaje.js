@@ -13,38 +13,56 @@ class Viaje extends Component {
     this.encontrarConductor = this.encontrarConductor.bind(this);
     this.mostrarConductor = this.mostrarConductor.bind(this);
     this.calcularDistancia = this.calcularDistancia.bind(this);
+    this.agregarFavoritos =this.agregarFavoritos.bind(this)
 
     this.encontrarConductor();
     this.calcularDistancia();
   }
 
+
+
   aceptar(){
 
-    fetch("/finalizarViaje", {
+    if(this.state.favoritosOrigen){
+      this.agregarFavoritos(this.state.latitudOrigen,this.state.longitudOrigen,this.state.descripcionOrigen)
+    }
+    if(this.state.favoritosDestino){
+      this.agregarFavoritos(this.state.latitudDestino,this.statelongitudDestino,this.state.descripcionDestino)
+    }
+    this.setState({
+      distancia:this.state.distancia,
+      pagina:'Calificacion'},()=>{
+        delete this.state.posicion;
+        delete this.state.placa;
+        delete this.state.nombreConductor;
+        delete this.state.encontrado;
+        delete this.state.estrellas;
+      this.props.callback(this.state)})
+  }
+
+  agregarFavoritos(lat,lng,descripcion){
+
+    fetch("/AddFavoritos", {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({
+        latitud:lat,
+        longitud:lng,
+        descripcion:descripcion,
+        cellphone:this.state.cellphone
+      })
     })
     .then(res => res.json())
     .then(res => {
       if(res[0].bool){
-        console.log("Viaje guardado")
+        console.log("favorito anadido exitosamente")
       }
-      else {console.log("viaje sin guardar")}})
-    .then(()=>{
-      this.setState({
-        distancia:this.state.distancia,
-        pagina:'Calificacion'},()=>{
-          delete this.state.posicion;
-          delete this.state.placa;
-          delete this.state.nombreConductor;
-          delete this.state.encontrado;
-          delete this.state.estrellas;
-        this.props.callback(this.state)})
-    });   
+      else {console.log("favorito sin anadir")}
+    }
+    )
   }
 
   cancelar(){

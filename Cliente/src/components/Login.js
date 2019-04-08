@@ -32,7 +32,6 @@ class Login extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res)
         this.setState(res[0],()=>{
         if(this.state.login){
           

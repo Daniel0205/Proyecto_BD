@@ -17,26 +17,31 @@ class Mapa extends React.Component {
       markers: [],
       address: ''
     };
-    this.mandarPos = this.mandarPos.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   //Funcion para capturar la latitud, la longitud y la direccion
   //respecto a un click en el mapa
   handleClick(e) {
-    this.setState({ currentPos: e.latlng });
-    console.log(this.state.currentPos);
-
-    reverse
-      .getReverse(this.state.currentPos.lat, this.state.currentPos.lng)
-      .then(location => {
-        this.setState({address:location.displayName});
-        console.log(this.state.address);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-    this.addMarker(e);
+    
+    this.setState({ currentPos: e.latlng },()=>{
+      reverse
+        .getReverse(this.state.currentPos.lat, this.state.currentPos.lng)
+        .then(location => {
+          this.setState({address:location.displayName},
+            ()=>{
+            this.props.callback({
+            latitud: this.state.currentPos.lat,
+            longitud: this.state.currentPos.lng,
+            descripcion: this.state.address
+          })});
+                
+        })
+        .catch(err => {
+          console.error(err);
+        });
+      this.addMarker(e);
+      }); 
   }
 
   //Funcion para añadir marcadores al mapa dinamicamente
@@ -46,13 +51,6 @@ class Mapa extends React.Component {
     this.setState({ markers });
   };
 
-  //Funcion para enviar la posicion al componente padre
-  mandarPos() {
-    this.props.callback({
-      lat: this.state.currentPos.lat,
-      lng: this.state.currentPos.lng
-    });
-  }
 
   render() {
     const position = [this.state.lat, this.state.lng];
@@ -65,7 +63,6 @@ class Mapa extends React.Component {
         center={position}
         zoom={this.state.zoom}
         onClick={this.handleClick}
-        onSelect={this.mandarPos}
       >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

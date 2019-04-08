@@ -79,7 +79,7 @@ app.post("/login", function (req, res) {
 
 app.post("/favoritos", function (req, res) {
 
-  let str ='SELECT  ST_X(ST_AsText(id_pos)) as longitud, ST_Y(ST_AsText(id_pos)) as latitud ,direccion '
+  let str ='SELECT DISTINCT ST_X(ST_AsText(id_pos)) as longitud, ST_Y(ST_AsText(id_pos)) as latitud ,direccion '
   +'FROM cliente NATURAL JOIN favoritos NATURAL JOIN posicion WHERE celular = ' + req.body.Username;
 
   connect(function(err, client, done) {
@@ -104,6 +104,48 @@ app.post("/favoritos", function (req, res) {
 
   console.log(req.body)
 });
+
+
+
+app.post("/AddFavoritos", function (req, res) {
+
+  let str = 'SELECT insertarPunto(\'POINT('+req.body.longitud+' '+req.body.latitud +')\',\''+req.body.descripcion+'\')';
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log(str)
+     client.query(str,(err, result)=> {
+        //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+        if(err) {
+          res.json([{bool: false }]);
+          return console.error('error running query', err);
+        }
+        else{
+          res.json([{bool: true }]);
+        }
+      })
+
+      str='INSERT INTO favoritos VALUES ('+req.body.cellphone+',\'POINT('+req.body.longitud+' '+req.body.latitud+')\')';    
+      console.log(str)
+      client.query(str,(err, result)=> {
+          //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+          done(err);
+          if(err) {
+            res.json([{bool: false }]);
+            return console.error('error running query', err);
+          }
+          else{
+            res.json([{bool: true }]);
+          }
+      }); 
+  });
+  console.log(req.body)
+});
+
+
 
 app.post("/consultarViajes", function (req, res) {
 
@@ -238,7 +280,125 @@ app.post("/PagarCobrar", function (req, res) {
       done(err);
 
       if(err) {
+        res.json([{bool:false}]);
+        return console.error('error running query', err);
+      }
+      else{
         res.json([{bool:true}]);
+      }
+    });
+  });
+
+  console.log(req.body)
+});
+
+
+app.post("/KmPagarCobrar", function (req, res) {
+
+  
+  let str ='';
+  if(req.body.tipo=="Conductor"){
+    str='SELECT * FROM kmConductorCobrar WHERE conductor='+req.body.Username ;
+  }
+  else {
+    str='SELECT * FROM kmClientePagar WHERE cliente='+req.body.Username;
+  }
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log(str)
+     client.query(str,(err, result) =>{
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+        res.json([{bool:false}]);
+        return console.error('error running query', err);
+      }
+      else{
+        if(result.rows[0].km===null){res.json([{bool:true, km:0}]);}
+        else{res.json([{bool:true, km:result.rows[0].km}])}
+      }
+    });
+  });
+
+  console.log(req.body)
+});
+
+app.post("/KmUsados", function (req, res) {
+
+  
+  let str ='';
+  if(req.body.tipo=="Conductor"){
+    str='SELECT * FROM kmConductor WHERE conductor='+req.body.Username ;
+  }
+  else {
+    str='SELECT * FROM kmCliente WHERE cliente='+req.body.Username;
+  }
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log(str)
+     client.query(str,(err, result) =>{
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+        res.json([{bool:false}]);
+        return console.error('error running query', err);
+      }
+      else{
+        if(result.rows[0].km===null){res.json([{bool:true, km:0}]);}
+        else{res.json([{bool:true, km:result.rows[0].km}])}
+      }
+    });
+  });
+
+  console.log(req.body)
+});
+
+
+app.post("/insertarUser", function (req, res) {
+
+  
+  let str ='';
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+
+      if(req.body.user=="Conductor"){
+        let coche='INSERT INTO taxi VALUES (\''+req.body.placa+'\',\''+req.body.modelo+'\',\''+req.body.marca+'\',\''
+            +req.body.baul+'\','+req.body.fecha+','+req.body.soat+')';
+
+        client.query(coche);        
+
+        str='INSERT INTO conductor VALUES ('+req.body.cellphone+',crypt(\''+req.body.password
+            +'\', gen_salt(\'md5\')),\''+req.body.nombre+'\',\''+req.body.apellido+'\',\''
+            +req.body.genero+'\',\''+req.body.placa+'\',false,null)';
+      }
+      else {
+        str='INSERT INTO cliente VALUES ('+req.body.cellphone+',crypt(\''+req.body.password
+            +'\', gen_salt(\'md5\')),\''+req.body.nombre+'\',\''+req.body.apellido+'\',\''
+            +req.body.genero+'\','+req.body.tarjeta+',\''+req.body.direccion+'\')';
+      }
+      
+    //use the client for executing the query
+     console.log(str)
+     client.query(str,(err, result) =>{
+
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+        res.json([{bool:false}]);
         return console.error('error running query', err);
       }
       else{
@@ -299,22 +459,39 @@ app.post("/finalizarViaje", function (req, res) {
 
 app.post("/reporte", function (req, res) {
 
-  res.json([{bool:true}]);
+  
+  let str = 'SELECT insertarPunto(\'POINT('+req.body.longitud+' '+req.body.latitud+')\',\''+req.body.descripcion+'\')';
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+     console.log(str)
+     client.query(str);
+
+    if(req.body==="Ocupado"){str = 'UPDATE conductor SET disponibilidad=false  WHERE celular='+req.body.cellphone}
+    else {str = 'UPDATE conductor SET disponibilidad=true, posicion_actual=\'POINT('+req.body.longitud+' '+req.body.latitud+')\' WHERE celular='+req.body.cellphone}
+
+    client.query(str,(err, result) =>{
+      console.log(str)
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+        res.json([{bool:false}]);
+        return console.error('error running query', err);
+      }
+      else{
+        res.json([{bool:true}]);
+      }
+    });
+  });
 
   console.log(req.body)
 
   console.log("Estado actualizado");
 });
-
-app.post("/insertarUser", function (req, res) {
-
-  res.json([{bool:true}]);
-
-  console.log(req.body)
-
-  console.log("Usuario insertado");
-});
-
 
 app.post("/actualizarDatos", function (req, res) {
 

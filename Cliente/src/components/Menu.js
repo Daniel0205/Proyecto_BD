@@ -9,43 +9,88 @@ class Menu extends Component {
         super(props)    
         if(this.props.user==="Conductor"){
             this.state={
-                kmtransp:this.calcularKmTransp(),
-                kmCobrar:this.consultarKmCobrar()               
+                kmtransp:0,
+                kmCobrar:0
             }
         }
         else{
             this.state={
-                kmUsados:this.calcularKmUsados(),
-                kmPagar:this.calcularKmPagar()              
+                kmUsados:0,
+                kmPagar:0
             }
         }
 
         this.calcularKmUsados=this.calcularKmUsados.bind(this)
         this.calcularKmPagar=this.calcularKmPagar.bind(this)
-        this.calcularKmTransp=this.calcularKmTransp.bind(this)
-        this.consultarKmCobrar=this.consultarKmCobrar.bind(this)
         this.cobrarPagarViajes=this.cobrarPagarViajes.bind(this)
         this.solicitarViaje=this.solicitarViaje.bind(this)
         this.reportarEstado =this.reportarEstado.bind(this)
         this.modificarDatos =this.modificarDatos.bind(this)
         this.verViajes =this.verViajes.bind(this)
-
+        
+        this.calcularKmUsados();
+        this.calcularKmPagar();
     }
 
     calcularKmPagar(){
-        return 100
+        fetch("/KmPagarCobrar", {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                Username: this.props.cellphone,
+                tipo:this.props.user
+            })
+          })
+          .then(res => res.json())
+          .then(res => {
+              console.log(res)
+              if(res[0].bool){
+                if(this.props.user==="Conductor"){
+                    this.setState({
+                        kmCobrar:res[0].km
+                    })
+                }
+                else{
+                    this.setState({
+                        kmPagar:res[0].km
+                    }); 
+                }
+              }
+              else console.log('km no calculados')              
+            });
     }
 
     calcularKmUsados(){
-        return 200
-    }
-
-    calcularKmTransp(){
-        return 300
-    }
-
-    consultarKmCobrar(){
-        return 400
+        fetch("/KmUsados", {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                Username: this.props.cellphone,
+                tipo:this.props.user
+            })
+          })
+          .then(res => res.json())
+          .then(res => {
+              if(res[0].bool){
+                if(this.props.user==="Conductor"){
+                    this.setState({
+                        kmtransp:res[0].km
+                    })
+                }
+                else{
+                    this.setState({
+                        kmUsados:res[0].km
+                    }); 
+                }
+              }
+              else console.log('km no calculados')              
+            });
     }
 
     cobrarPagarViajes(){
