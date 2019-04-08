@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './SolicitudViaje.css'
 import Posicion from './Posicion';
 
 
@@ -48,19 +48,23 @@ class SolicitudViaje extends Component {
 
   mostrarBoton(){
     if(this.state.selected){
-      return(<button onClick={this.solicitarViaje}>Solicitar Viaje</button>);
+      return(<button id="so" onClick={this.solicitarViaje}>Solicitar Viaje</button>);
     }
   }
 
+
   render() {
     return(
-        <div>
-            <form>
-                <Posicion tipo='origen' cellphone={this.props.cellphone} callback={this.getPosicion}/>
-                <Posicion tipo='destino'cellphone={this.props.cellphone} callback={this.getPosicion}/>
-                {this.mostrarBoton()}
-                <button onClick={this.cancelar}>Cancelar</button>
-            </form>
+        <div className="prinv">
+            <div className='soli'>
+              <Posicion tipo='origen' cellphone={this.props.cellphone} callback={this.getPosicion}/>
+              <Posicion tipo='destino' cellphone={this.props.cellphone} callback={this.getPosicion}/>
+            </div>
+              
+            <div className='boto'> 
+              {this.mostrarBoton()}
+              <button id="ca1" onClick={this.cancelar}>Cancelar</button>
+            </div>
         </div>
         
     );

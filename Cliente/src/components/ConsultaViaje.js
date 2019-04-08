@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './ConsultaViaje.css'
 
 class ConsultaViaje extends Component {
 
@@ -10,7 +10,6 @@ class ConsultaViaje extends Component {
     if (this.props.user==="Usuario"){
         nombre =  <p>Nombre Del chofer: {this.props.datos.nombreChofer}</p>
     }
-    else{ nombre =  <p>Nombre Del cliente: {this.props.datos.nombreCliente}</p>}
 
 
     let pago = null,msj='';
@@ -27,8 +26,8 @@ class ConsultaViaje extends Component {
     }
 
     return (
-        <div>
-            <h1>Viaje - {this.props.datos.id}</h1>
+        <div className='ficha'>
+            <h3>Viaje - {this.props.datos.id}</h3>
             {nombre}
             <p>Punto de partida: {this.props.datos.descripcionOrigen}</p>
             <p>Punto de destino: {this.props.datos.descripcionDestino} </p>
@@ -37,7 +36,6 @@ class ConsultaViaje extends Component {
             <p>Fecha: {this.props.datos.fecha}</p>
             {pago}
             <p>Calificacion: {this.props.datos.califiacion}</p>
-            <br></br>
         </div>
 
     ); 

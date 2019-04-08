@@ -1,0 +1,23 @@
+html {
+    background-color: #ffffcc;
+}
+
+.origen{
+    float: left;
+    background-color: #ff9966;
+    border-radius: 15px;
+    width: 42%;
+    height:100%;
+    padding: 2%;
+    margin-left: 5%;
+}
+
+.destino{
+    float: right;
+    background-color: #ff9966;
+    border-radius: 15px;
+    width: 42%;
+    height:100%;
+    padding: 2%;
+    margin-right: 5%;
+}

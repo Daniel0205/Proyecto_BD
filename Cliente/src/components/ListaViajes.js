@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './ListaViajes.css'
 import ConsultaViaje from './ConsultaViaje';
 
 class ListaViaje extends Component {
@@ -41,11 +41,13 @@ class ListaViaje extends Component {
     let viajes = this.state.viajes;
     const viajesArray = viajes.map((x) => {return(<ConsultaViaje key={x.id} user={this.props.user} datos={x}/>)});
 
+    /**/
     return (
-        <div>
-            <h1>Mis viajes</h1>
-            {viajesArray}
-
+        <div className='mainv'>
+            <h1 id="vi" >Mis viajes</h1>
+            <div id="trips">
+              {viajesArray}
+            </div>
             <button onClick={this.volverMenu}>Volver</button>
         </div>
 

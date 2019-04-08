@@ -1,0 +1,78 @@
+html {
+    background-color: #ffffcc;
+}
+
+.prin1{
+    position: absolute;
+    align-content: center;
+    display: block;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border-radius: 15px;
+    padding: 20px 50px 25px 50px;
+    width: 90%;
+    height: 80%;
+}
+
+#wel{
+    text-align: center;
+    padding-bottom: 30px
+}
+
+.butc{
+    margin-left:35px ;
+    margin-right: 35px; 
+    color: black;
+}
+
+#sec{
+    text-align: center;
+    color: white;
+}
+
+#bt1{
+    width: 20%;
+}
+
+#bt2{
+    width: 25%;
+}
+
+.ks{
+    font-weight: bold;
+}
+
+#kp{
+    text-align: center;
+    color: white;
+    margin-bottom: 17%;
+}
+
+.imagenes{
+    width: 25%;
+    height: 15%;
+    margin: 0% 3.4% 2%;
+}
+
+
+.opciones{
+    position: relative;
+    float: left;
+    align-content: center;
+    background-color: #ff9966;
+    border-radius: 15px;
+    padding: 20px 50px 25px 50px;
+    width: 70%;
+}
+
+.kilometros{
+    
+    float: right;
+    align-content: center;
+    background-color: #ff9966;
+    padding: 20px 50px 25px 50px;
+    border-radius: 15px;
+
+}

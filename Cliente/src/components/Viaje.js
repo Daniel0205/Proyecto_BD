@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Viaje.css'
 
 
 class Viaje extends Component {
@@ -96,26 +97,45 @@ class Viaje extends Component {
       <p key="2">celular: {this.state.celularConductor}</p>,
       <p key="3">Nombre: {this.state.nombreConductor} </p>,
       <p key="4">Numero de estrellas: {this.state.estrellas}</p>,
-      <p key="5">Posicion actual: {this.state.posicion}</p>,
-      <button  key="6" onClick={this.aceptar}>Aceptar viaje</button>]);
+      <p key="5">Posicion actual: {this.state.posicion}</p>]);
     }
     else return(<p key="7">No se han encontrado choferes disponibles</p>)
 
   }
+  /*
 
-  render() {
-    return (
-        <div>
-            <h2>Informacion del Viaje</h2>
-            <p>Punto de partida: {this.props.viaje.descripcionOrigen}</p>
-            <p>Punto de destino: {this.props.viaje.descripcionDestino} </p>
-            <p>Distancia: {this.state.distancia} Km</p>
-            <p>Precio del viaje: ${this.state.distancia*1500}</p>
+   
 
             <h2>Informacion del chofer</h2>
             {this.mostrarConductor()}
-            
-            <button onClick={this.cancelar}>Cancelar</button>
+
+  */
+
+  render() {
+    return (
+        <div className='princ'>
+
+          <div className='cont'>
+            <div className='lsd'>
+              <h2>Informacion del Viaje</h2>
+              <p>Punto de partida: {this.props.viaje.descripcionOrigen}</p>
+              <p>Punto de destino: {this.props.viaje.descripcionDestino} </p>
+              <p>Distancia: {this.state.distancia} Km</p>
+              <p>Precio del viaje: ${this.state.distancia*1500}</p>
+            </div>
+            <div className='chofer'>
+              <h2>Informacion del chofer</h2>
+              {this.mostrarConductor()}
+            </div>
+
+          </div>
+
+          <div className='botns'>
+            <button id='b1' key="6" onClick={this.aceptar}>Aceptar viaje</button>
+            <button id='b2' onClick={this.cancelar}>Cancelar</button>
+          </div>
+
+
         </div>
 
     ); 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './Reporte.css'
 import Mapa from './Mapa';
 
 class Reporte extends Component {
@@ -54,7 +54,7 @@ class Reporte extends Component {
       if(this.state.disponible==="Disponible"){
           return (
           <div className='mapa'>
-            <h2>Porfavor informe de su ubicacion actual</h2>
+            <h5>Porfavor informe de su ubicacion actual:</h5>
             <Mapa/>
           </div>)
       }
@@ -62,22 +62,27 @@ class Reporte extends Component {
 
   mostrarBoton(){
     if(this.state.disponible!=='none'){
-      return(<button onClick={this.handleClick}>Reportar</button>);
+      return(<button id="report" onClick={this.handleClick}>Reportar</button>);
     }
   }
 
   render() {
     return (
       <div className="User-Mapa">
-        <h2>Estado Actual:</h2>
-        <select name="estado" defaultValue ="Select" onChange={this.handleSelect}>
-          <option value="Select" disabled>Selecciona su estado actual:</option>
-          <option value="Ocupado" >Ocupado </option>
-          <option value="Disponible">Disponible </option>
-        </select><br></br>
-        {this.retornarMapa()}   
+        <h2>Reporte de estado actual del chofer</h2>
+
+        <div className='main'>
+          <h5>Estado actual:</h5>
+          <select name="estado" defaultValue ="Select" onChange={this.handleSelect}>
+            <option value="Select" disabled>Selecciona su estado actual:</option>
+            <option value="Ocupado" >Ocupado </option>
+            <option value="Disponible">Disponible </option>
+          </select><br></br>
+          {this.retornarMapa()} 
+        </div>
+  
         {this.mostrarBoton()}     
-        <button onClick={this.cancelar}>Cancelar</button>
+        <button id="cancel" onClick={this.cancelar}>Cancelar</button>
       </div>
     ); 
   }

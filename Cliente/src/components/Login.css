@@ -15,7 +15,7 @@ html {
     font:   120% cursive;
     margin-left: 25%;
     margin-right: 25%;
-    background-color: rgba(255, 136, 0, 0.698);
+    background-color: #ff9966;
     border-radius: 25px;
     box-shadow: 5px 5px 5px rgba(0, 0, 255, .2);
 }
@@ -61,7 +61,7 @@ html {
     width: 50%;
     margin-left: 25%;
     margin-right: 25%;
-    background-color: rgba(255, 136, 0, 0.698);
+    background-color: #ff9966;
     border-radius: 25px;
     padding: 10px; 
     box-shadow: 5px 5px 5px rgba(0, 0, 255, .2);

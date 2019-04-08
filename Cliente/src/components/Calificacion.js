@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './Calificacion.css'
+import star from '../images/estrella.svg'
 
 
 class Calificaion extends Component {
@@ -57,10 +59,10 @@ class Calificaion extends Component {
     const estrellas = numEstrellas.map((x) => 
     {
       if(x.toString()===this.state.calificacion){
-        return([<input type='radio' checked={true} value={x} onChange={this.seleccionar} key={x}/>,<p key={x+x}>{x}</p>])
+        return([<input type='radio' checked={true} value={x} onChange={this.seleccionar} key={x}/>])
       }
       else{
-        return([<input type='radio' checked={false} value={x} onChange={this.seleccionar} key={x}/>,<p key={x+x}>{x}</p>])
+        return([<input type='radio' checked={false} value={x} onChange={this.seleccionar} key={x}/>])
       }
     })
 
@@ -69,7 +71,39 @@ class Calificaion extends Component {
     return (
       <div className="Calificacion" >
         <h2 >Porfavor califique la calidad del servicio:</h2>
-          {estrellas}
+        <div className='conte'>
+          <div className='puntu'>
+            {estrellas}
+          </div>
+          <div className='stars'>
+            <div>
+              <img className='imagenes' src={star} alt="logoesc"/>
+            </div>
+            <div>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+            </div>
+            <div>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+            </div>
+            <div>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+            </div>
+            <div>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+              <img className='imagenes' src={star} alt="logoesc"/>
+            </div>
+          </div>
+          
+        </div>
           {this.boton()}        
       </div>
     ); 

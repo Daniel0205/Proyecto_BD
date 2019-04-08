@@ -30,7 +30,7 @@ class Header extends Component {
   mostrarBoton(){
     
     if(this.state.pagina==="Menu-Usuario"||this.state.pagina==="Menu-Conductor"){
-      return(<button onClick={this.cerrarSesion}>Cerrar Sesion</button>)
+      return(<button id="cs" onClick={this.cerrarSesion}>Cerrar Sesion</button>)
     }
   }
 

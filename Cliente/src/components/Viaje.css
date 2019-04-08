@@ -1,0 +1,58 @@
+html{
+    background-color: #ffffcc; 
+}
+
+.princ{
+    position: absolute;
+    align-content: center;
+    display: block;
+    margin: 1%;
+    border-radius: 15px;
+    padding: 0% 3% 2%;
+    width: 98%;
+    height: 80%;
+}
+
+.cont{
+    padding-top: 3%;
+    width: 98%;
+    height: 80%;
+}
+
+.botns{
+    width: 98%;
+    height: 10%;
+    
+}
+
+.chofer{
+    float: right;
+    align-content: center;
+    background-color: #ff9966;
+    padding: 1% 2%;
+    border-radius: 15px;
+    width: 32%;
+    margin-right: 14%;
+    height: 80%;
+}
+
+.lsd{
+    float: left;
+    align-content: center;
+    background-color: #ff9966;
+    padding: 1% 2%;
+    border-radius: 15px;
+    width: 32%;
+    height: 80%;
+    margin-left: 13%;
+}
+
+#b1{
+    float: left;
+    margin-left: 33%;
+}
+
+#b2{
+    float: right;
+    margin-right: 36%;
+}

@@ -1,0 +1,42 @@
+html {
+    background-color: #ffffcc;
+}
+
+.prinv{
+    position: absolute;
+    align-content: center;
+    display: block;
+    margin: 1%;
+    border-radius: 15px;
+    padding: 0% 3% 2%;
+    width: 98%;
+    height: 80%;
+}
+
+.soli{
+    display: block;
+    width: 98%;
+    height: 90%;
+    margin: 1%;
+    border-radius: 15px;
+    padding: 0% 3%;
+}
+
+.boto{
+
+    width: 98%;
+    height: 9%;
+    margin: 1%;
+    border-radius: 15px;
+    padding: 0% 3%;
+}
+
+#ca1{
+    float: right;
+    margin-right: 30%;
+}
+
+#so{
+    float: left;
+    margin-left: 30%;
+}

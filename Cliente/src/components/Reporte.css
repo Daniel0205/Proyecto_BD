@@ -1,0 +1,40 @@
+html {
+    background-color: #ffffcc;
+}
+
+.User-Mapa{
+    position: absolute;
+    align-content: center;
+    display: block;
+    border-radius: 15px;
+    padding: 10px 50px 10px 50px;
+    width: 95%;
+    height: 80%;
+}
+
+.User-Mapa h2{
+    text-align: center;
+}
+
+.main{
+    position: relative;
+    float: center;
+    background-color: #ff9966;
+    width: 60%;
+    height: 85%;
+    padding: 1% 4%;
+    padding-bottom: 3%;
+    margin: 1% 5%;
+    margin-left: 20%;
+    border-radius: 15px;
+}
+
+#cancel{
+    position: relative;
+    float: right;
+    margin-right: 35%
+}
+
+#report{
+    margin-left: 35%;
+}

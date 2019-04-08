@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './Posicion.css'
 import Mapa from './Mapa';
 
 
@@ -99,9 +99,9 @@ class Posicion extends Component {
             case "mapa":
             return ( 
                 <div className={this.state.tipo}>
-                    <h1>Ingrese {this.props.tipo}</h1>
-                    <input type="checkbox"  value="add-fav"/> Agregar a favoritos<br></br>
+                    <h3>Ingrese {this.props.tipo}</h3>
                     <input type="radio"  value="mapa" checked={true} onChange={this.handleChange}/> Seleccionar del mapa<br></br>
+                    <input type="checkbox"  value="add-fav"/> Agregar a favoritos<br></br>
                     <Mapa />
                     <input type="radio"  value="favoritos" checked={false} onChange={this.handleChange}/>Seleccionar de favoritos<br></br>
 
@@ -109,7 +109,7 @@ class Posicion extends Component {
             case "favoritos":
                 return (                    
                         <div className={this.props.tipo}>
-                            <h1>Ingrese {this.state.tipo}</h1>
+                            <h3>Ingrese {this.state.tipo}</h3>
                             
                             <input type="radio" value="mapa" checked={false} onChange={this.handleChange}/> Seleccionar del mapa<br></br>
                             <input type="radio" value="favoritos" checked={true} onChange={this.handleChange}/>Seleccionar de favoritos<br></br>
@@ -121,7 +121,7 @@ class Posicion extends Component {
             default:
                 return (
                 <div className={this.props.tipo}>
-                    <h1>Ingrese {this.props.tipo}</h1>
+                    <h3>Ingrese {this.props.tipo}</h3>
                     <input type="radio" value="mapa" checked={false} onChange={this.handleChange}/> Seleccionar del mapa<br></br>
                     <input type="radio" value="favoritos" checked={false}  onChange={this.handleChange}/>Seleccionar de favoritos<br></br>
 

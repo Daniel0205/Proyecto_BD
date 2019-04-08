@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-
-
+import './Menu.css'
+import esc from '../images/escritura.svg' ;
+import rep from '../images/reportar.svg' ;
+import via from '../images/taxi.svg' ;
+import con from '../images/conductor.svg' ;
 
 
 class Menu extends Component {
@@ -85,19 +88,28 @@ class Menu extends Component {
         case "Conductor":
           
             return(
-                <div>
+                <div className='prin1'>
+                    <h2 id="wel">¡Bienvenido Conductor!</h2>
                     <div className='opciones'>
-                        <h2>Seleccione una opcion:</h2>
-                        <button onClick={this.modificarDatos} >Modificar Datos</button>
-                        <button onClick={this.reportarEstado} >Reportar Estado</button>
-                        <button onClick={this.verViajes}>Ver Viajes</button>
+                        <h2 id="sec">Seleccione una opcion:</h2>
+                        <img className='imagenes' src={esc} alt="logoesc"/>
+                        <img className='imagenes' src={rep} alt="logorep"/>
+                        <img className='imagenes' src={via} alt="logovia"/>
+
+                        <div>
+                        <button className="butc" onClick={this.modificarDatos} >Modificar Datos</button>
+                        <button className="butc" onClick={this.reportarEstado} >Reportar Estado</button>
+                        <button id="bt1" className="butc" onClick={this.verViajes}>Ver Viajes</button>
                         </div>
-                        <div className='kilometros'>
-                    <h2>Kilometros</h2>
-                        <p>Kilometros transportados:</p>
-                        <p>{this.window.kmtransp} Km</p>
-                        <p>Kilometros a cobrar:</p>
-                        <p>{this.window.kmCobrar} Km</p>
+                        
+                     
+                    </div>
+                    <div className='kilometros'>
+                        <h2 id="kp">Kilometros</h2>
+                        <p className="ks">Kilometros transportados:</p>
+                        <p className="ks">{this.window.kmtransp} Km</p>
+                        <p className="ks">Kilometros a cobrar:</p>
+                        <p className="ks">{this.window.kmCobrar} Km</p>
                         <button onClick={this.cobrarViajes} >Cobrar Viajes</button>
                     </div>
                 </div>
@@ -105,19 +117,27 @@ class Menu extends Component {
     
         case "Usuario":
             return(
-                <div>
+                <div className='prin1'>
+                    <h2 id="wel">¡Bienvenido usuario!</h2>
                     <div className='opciones'>
-                        <h2>Seleccione una opcion:</h2>
-                        <button  onClick={this.modificarDatos} >Modificar Datos</button>
-                        <button  onClick={this.solicitarViaje} >Solicitar Viaje</button>
-                        <button  onClick={this.verViajes}>Ver Viajes</button>
+                        <h2 id="sec">Seleccione una opcion:</h2>
+                        <img className='imagenes' src={esc} alt="logoesc"/>
+                        <img className='imagenes' src={con} alt="logorep"/>
+                        <img className='imagenes' src={via} alt="logovia"/>
+
+                        <div>
+                        <button className="butc" onClick={this.modificarDatos} >Modificar Datos</button>
+                        <button className="butc" onClick={this.solicitarViaje} >Solicitar Viaje</button>
+                        <button id="bt2" className='butc' onClick={this.verViajes}>Ver Viajes</button>
                         </div>
-                        <div className='kilometros'>
-                    <h2>Kilometros</h2>
-                        <p>Kilometros Usados:</p>
-                        <p>{this.window.kmUsados} Km</p>
-                        <p>Kilometros a Pagar:</p>
-                        <p>{this.window.kmPagar} Km</p>
+                       
+                    </div>
+                    <div className='kilometros'>
+                        <h2 id="kp">Kilometros</h2>
+                        <p className="ks">Kilometros Usados:</p>
+                        <p className="ks">{this.window.kmUsados} Km</p>
+                        <p className="ks">Kilometros a Pagar:</p>
+                        <p className="ks">{this.window.kmPagar} Km</p>
                         <button onClick={this.pagarViajes}   >Pagar Viajes</button>
                     </div>
                 </div>

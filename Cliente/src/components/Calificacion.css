@@ -1,0 +1,59 @@
+html{
+    background-color: #ffffcc;
+}
+
+.Calificacion{
+    position: absolute;
+    align-content: center;
+    display: block;
+    margin: 1%;
+    border-radius: 15px;
+    padding: 0% 3% 2%;
+    width: 98%;
+    height: 80%;
+
+}
+
+.Calificacion h2{
+    text-align: center;
+    margin: 1% 2%;
+}
+
+.conte{
+    width: 60%;
+    height: 70%;
+    margin-left: 20%;
+    background-color: #ff9966;
+    border-radius: 15px;
+}
+
+.Calificacion button{
+    margin-top: 3%;
+    margin-left: 44%
+}
+
+.puntu{
+    float: left;
+    width: 5%;
+    height: 100%;
+    padding: 1% 1%;
+
+}
+
+.stars{
+    float: right;
+    width: 95%;
+    height: 100%;
+    padding: 1% 1%;
+
+}
+
+.stars img{
+    width: 7%;
+    height: 7%;
+}
+
+.puntu input{
+    margin: 100% 0%;
+    padding: 20%;
+}

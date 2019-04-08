@@ -1,0 +1,38 @@
+html {
+    background-color: #ffffcc;
+}
+
+.mainv{
+    position: absolute;
+    align-content: center;
+    display: block;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border-radius: 15px;
+    padding: 1% 4%;
+    width: 90%;
+    height: 80%;
+}
+
+.mainv button{
+    margin-top: 1%;
+    margin-left: 45%;
+}
+
+#vi{
+    text-align: center;
+}
+
+#trips{
+    overflow-y: scroll;
+    padding: 1.5%;
+    height: 80%;
+    padding-right: 40%; 
+    width: 80%;
+    margin-left: 30%;
+    border-radius: 15px;
+    border-color: black;
+}
+
