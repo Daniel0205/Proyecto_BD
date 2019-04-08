@@ -31,7 +31,7 @@ class ListaViaje extends Component {
         })
       })
       .then(res => res.json())
-      .then(res => this.setState({viajes:res[0].viajes}));
+      .then(res => this.setState({viajes:res}));
   }
 
 

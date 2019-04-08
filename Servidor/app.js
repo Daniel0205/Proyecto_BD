@@ -115,7 +115,49 @@ app.post("/favoritos", function (req, res) {
 
 app.post("/consultarViajes", function (req, res) {
 
-  if(req.body.user==='Usuario'){
+ 
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+    }
+
+    let str='';
+
+    if(req.body.user==='Usuario'){
+      str='select id_viaje as id, conductor.nombres as nombreChofer,to_char(fecha, \'DD-MM-YYYY\') as fecha,pagado,calificacion, '+
+      'distancia(ST_AsText(id_pos_origen),ST_AsText(id_pos_destino)) as kmrecorridos, '+
+      'origen.direccion as descripcionOrigen,destino.direccion as descripcionDestino '+
+      'from viajes, posicion as origen, posicion as destino, conductor '+
+      'where id_pos_origen=origen.id_pos AND id_pos_destino=destino.id_pos '+
+      'AND celular_conductor=conductor.celular AND viajes.celular_cliente = '+ req.body.cellphone;      
+    }
+    else{
+      str='select distinct viajes.id_viaje as id, cliente.nombres as nombreCliente,to_char(fecha, \'DD-MM-YYYY\') as fecha,calificacion, cobrado,'+
+      'distancia(ST_AsText(id_pos_origen),ST_AsText(id_pos_destino)) as kmRecorridos,'+
+      'origen.direccion as descripcionOrigen,destino.direccion as descripcionDestino '+
+      'from viajes, posicion as origen, posicion as destino, cliente natural join conductor_viajes '+
+      'where id_pos_origen=origen.id_pos AND id_pos_destino=destino.id_pos '+
+      'AND viajes.celular_cliente=cliente.celular AND viajes.celular_conductor = '+ req.body.cellphone;
+    }
+    //use the client for executing the query
+     console.log(str)
+     client.query(str,(err, result)=> {
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+        res.json([]);
+      
+        return console.error('error running query', err);
+      }
+      else{
+        console.log(result.rows)
+        res.json(result.rows);
+      }
+      
+    });
+  });
+/* if(req.body.user==='Usuario'){
     res.json([{viajes:
       [{id:1,
       nombreChofer:"nsasgfsdf",
@@ -151,10 +193,10 @@ app.post("/consultarViajes", function (req, res) {
       fecha:"2015/05/2015",
       cobrado:false,
       califiacion:3,
-      kmRecorridos:155}]}]);
+      kmRecorridos:155}]}]);*/
 
 
-  }
+  
 
   console.log(req.body)
 });
