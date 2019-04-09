@@ -153,6 +153,7 @@ html {
     height: 100%;
     float: right;
     margin-right: 15%;
+    overflow-y: scroll;
 }
 
 #cambiar select{

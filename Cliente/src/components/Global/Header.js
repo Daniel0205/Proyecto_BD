@@ -38,8 +38,10 @@ class Header extends Component {
     return (
       <div className="Header">
         <img src={logo} alt="logo" id="logo" />
-        <h1>NotThatEasyTaxy</h1>        
-        {this.mostrarBoton()}
+        <h1>NotThatEasyTaxy</h1>
+        <div id='bcs'>
+          {this.mostrarBoton()}
+        </div>        
       </div> 
     );
     
