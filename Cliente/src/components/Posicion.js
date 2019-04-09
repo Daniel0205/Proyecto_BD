@@ -122,7 +122,7 @@ class Posicion extends Component {
 
     handleCheck(event){
 
-        this.setState({check:!this.state.check})
+        this.setState({check:!this.state.check},this.props.callback({favoritosDestino:this.state.check}))
     }
 
     render() {    
