@@ -1,4 +1,5 @@
 .User{
+    position: absolute;
     margin: auto;
     display: grid;
 }
