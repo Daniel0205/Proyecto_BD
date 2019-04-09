@@ -45,6 +45,7 @@ html{
     width: 32%;
     height: 80%;
     margin-left: 13%;
+    overflow-y: scroll;
 }
 
 #b1{

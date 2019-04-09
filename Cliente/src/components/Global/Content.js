@@ -78,7 +78,10 @@ class Content extends Component {
 
   render() {
     console.log(this.state)
-
+    /* 
+    <User URL= {userLogo} msj="Usuario" callback={this.setPage}/>
+    <User URL= {taxistaLogo} msj="Conductor" callback={this.setPage}/>
+    */
     switch(this.state.pagina){
       case 'Login':
         return (
@@ -86,12 +89,17 @@ class Content extends Component {
       case 'Registro':
         return(
           <div className="Content">
-          <Title mensaje='Seleccione el tipo de usuario a registrar:'/>
-          <div className='Logos'>
-            <User URL= {userLogo} msj="Usuario" callback={this.setPage}/>
-            <User URL= {taxistaLogo} msj="Conductor" callback={this.setPage}/>
-          </div>
-        </div>);
+            <Title mensaje='Seleccione el tipo de usuario a registrar:'/>
+
+            <div className='Logos'>
+              <div id='l1'>
+                <User URL= {userLogo} msj="Usuario" callback={this.setPage}/>
+              </div>
+              <div id='l2'>
+                <User URL= {taxistaLogo} msj="Conductor" callback={this.setPage}/>
+              </div>
+            </div>
+          </div>);
 
       case 'Datos-Conductor':
         return(

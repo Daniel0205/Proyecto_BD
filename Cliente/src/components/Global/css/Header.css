@@ -7,8 +7,11 @@
     padding-top: 60%
 }
 
-#cs{
+#bcs{
+    padding: 1%;
+    width: 70%;
     float: right;
+    margin-left: 58%;
 }
 
 .Header {

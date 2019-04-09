@@ -55,7 +55,7 @@ class Login extends Component {
   render() {
     const { cellphone, psw } = this.state;
     return (
-      <div className="login">
+      <div className="loginp">
         <form className="form" name="login" onSubmit={this.handleSubmit}>
           <h1>Login</h1>
           <p>Username:</p>
