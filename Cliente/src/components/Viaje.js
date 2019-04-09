@@ -28,7 +28,7 @@ class Viaje extends Component {
       this.agregarFavoritos(this.state.latitudOrigen,this.state.longitudOrigen,this.state.descripcionOrigen)
     }
     if(this.state.favoritosDestino){
-      this.agregarFavoritos(this.state.latitudDestino,this.statelongitudDestino,this.state.descripcionDestino)
+      this.agregarFavoritos(this.state.latitudDestino,this.state.longitudDestino,this.state.descripcionDestino)
     }
     this.setState({
       distancia:this.state.distancia,

@@ -215,10 +215,13 @@ app.post("/encontrarConductor", function (req, res) {
         return console.error('error running query', err);
       }
       else{
+        let estrellas = result.rows[0].estrellas
+        if(result.rows[0].estrellas===null) estrellas=0
+
         res.json([{nombreConductor:result.rows[0].nombres,
           placa:result.rows[0].placa,
           celularConductor:result.rows[0].celular,
-          estrellas:parseInt(result.rows[0].estrellas),
+          estrellas:parseInt(estrellas),
           posicion:result.rows[0].direccion,
           encontrado: true }]);
       }
