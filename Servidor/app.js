@@ -483,41 +483,118 @@ app.post("/reporte", function (req, res) {
   console.log("Estado actualizado");
 });
 
-app.post("/actualizarDatos", function (req, res) {
 
-  res.json([{bool:true}]);
+app.post("/getAutos", function (req, res) {
+
+  
+  let str = 'select placa,modelo,marca,baul,ano as fecha,soat from taxi where placa not in '+
+            '(select placa from taxi natural join conductor where disponibilidad=true '+
+            'and not conductor.celular = '+req.body.cellphone+')';
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+
+    client.query(str,(err, result) =>{
+      console.log(str)
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+        res.json([{autosDisponibles:[]}]);
+        return console.error('error running query', err);
+      }
+      else{
+        console.log(result.rows)
+        res.json([{autosDisponibles:result.rows}]);
+      }
+    });
+  });
 
   console.log(req.body)
 
-  console.log("Datos actualizados");
+  console.log("Estado actualizado");
 });
+
+app.post("/actualizarDatos", function (req, res) {
+
+  let str='',psw='';
+
+  if(req.body.password!==''){
+    psw=', contrasena=crypt(\''+req.body.password+'\', gen_salt(\'md5\'))';
+  } 
+  if(req.body.user==='Usuario'){
+    str ='UPDATE cliente SET nombres=\''+req.body.nombre+'\', apellidos=\''+req.body.apellido+'\', genero=\''+req.body.genero+'\','+
+         'tarjeta_credito='+req.body.tarjeta+',direccion_residencia=\''+req.body.direccion+'\''+ psw+' where celular='+req.body.cellphone;
+  }
+  else{
+    str='UPDATE conductor SET nombres=\''+req.body.nombre+'\', apellidos=\''+req.body.apellido+'\', genero=\''+req.body.genero+
+    '\', placa=\''+req.body.placa+'\''+ psw+' where celular='+req.body.cellphone;
+  }
+
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+
+    client.query(str,(err, result) =>{
+      console.log(str)
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+      if(err) {
+        res.json([{bool:false}]);
+        return console.error('error running query', err);
+      }
+      else{
+        res.json([{bool:true}]);
+      }
+    });
+  });
+});
+
+
+
 
 app.post("/getDatos", function (req, res) {
 
+  let str
+
   if(req.body.user==='Usuario'){
-    res.json([{
-      nombre:'Daniel Alejandro',
-      apellido:'Diaz Ocampo',
-      genero:'M',
-      direccion:'enrique segoviano :v',
-      tarjeta:451458745
-    }]);
+    str ='select nombres as nombre, apellidos as apellido, genero, tarjeta_credito as tarjeta, '+
+         'direccion_residencia as direccion from cliente where celular= '+req.body.cellphone;
   }
   else{
-    res.json([{
-      nombre:'Daniel Alejandro',
-      apellido:'Diaz Ocampo',
-      genero:'M',
-      placa:'ABCD 1234',
-      modelo:2015,
-      marca:'mazda',
-      baul:'G',
-      fecha:2015,
-      soat:"nose"
-    }]);
-  }
-  
 
+    str='select nombres as nombre, apellidos as apellido, genero, placa, modelo,marca,'+
+        'baul,ano as fecha,soat from conductor natural join taxi where celular = '+req.body.cellphone;
+  }
+
+
+  connect(function(err, client, done) {
+    if(err) {
+        return console.error('error fetching client from pool', err);
+        }
+    //use the client for executing the query
+
+    client.query(str,(err, result) =>{
+      console.log(str)
+      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+      done(err);
+
+      if(err) {
+        res.json([{autosDisponibles:[]}]);
+        return console.error('error running query', err);
+      }
+      else{
+        console.log(result.rows[0])
+        res.json([result.rows[0]]);
+      }
+    });
+  });
   console.log(req.body)
 
   console.log("Datos Enviados");
