@@ -163,7 +163,7 @@ CREATE VIEW kmclientePagar AS
 	GROUP BY celular) ;
 
 
-drop view promestrellas;
+DROP VIEW IF EXISTS promestrellas;
 CREATE VIEW promEstrellas AS (SELECT celular as celular,AVG(calificacion) as estrellas
 FROM viajes right outer join conductor on viajes.celular_conductor=conductor.celular
 GROUP BY celular)

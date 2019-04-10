@@ -21,3 +21,11 @@ html {
     padding: 2%;
     margin-right: 5%;
 }
+
+.origen select{
+    width: 50%;
+}
+
+.destino select{
+    width: 50%;
+}
