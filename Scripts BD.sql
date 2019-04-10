@@ -166,7 +166,7 @@ CREATE VIEW kmclientePagar AS
 DROP VIEW IF EXISTS promestrellas;
 CREATE VIEW promEstrellas AS (SELECT celular as celular,AVG(calificacion) as estrellas
 FROM viajes right outer join conductor on viajes.celular_conductor=conductor.celular
-GROUP BY celular)
+GROUP BY celular);
 
 /*
 CREATE OR REPLACE FUNCTION calcularCercania() RETURNS TRIGGER AS $$
@@ -210,7 +210,6 @@ INSERT INTO taxi VALUES ('******','DESCONOCIDO','DESCONOCIDO','N',0,0);
 INSERT INTO conductor VALUES (3218021197,crypt('1234', gen_salt('md5')),'Arjen','Granada','M','ABC123',true,'POINT(-76.516919 3.420180)');
 INSERT INTO conductor VALUES (3456733214,crypt('1234', gen_salt('md5')),'Alex','Herrera','M','CBA321',false,'POINT(-76.530014 3.372059)');
 INSERT INTO conductor VALUES (3127395835,crypt('1234', gen_salt('md5')),'Rosa','Cadena','F','VCB456',true,'POINT(-76.536722 3.442843)');
-INSERT INTO conductor VALUES (0,crypt('1', gen_salt('md5')),'DESCCONOCIDO','DESCONOCIDO','N','******');
 INSERT INTO posicion VALUES ('POINT(-76.502000 3.418842)','Diamante');
 INSERT INTO posicion VALUES ('POINT(-76.530014 3.372059)','Univalle');
 INSERT INTO posicion VALUES ('POINT(-76.545068 3.435787)','Parque del perro');
