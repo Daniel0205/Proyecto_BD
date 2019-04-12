@@ -4,6 +4,9 @@ import esc from '../images/escritura.svg' ;
 import rep from '../images/reportar.svg' ;
 import via from '../images/taxi.svg' ;
 import con from '../images/conductor.svg' ;
+import toaster from 'toasted-notes';
+
+import 'toasted-notes/src/styles.css'; // optional styles
 
 
 class Menu extends Component {
@@ -49,7 +52,7 @@ class Menu extends Component {
           })
           .then(res => res.json())
           .then(res => {
-              console.log(res)
+
               if(res[0].bool){
                 if(this.props.user==="Conductor"){
                     this.setState({
@@ -60,9 +63,10 @@ class Menu extends Component {
                     this.setState({
                         kmPagar:res[0].km
                     }); 
+
                 }
               }
-              else console.log('km no calculados')              
+         
             });
     }
 
@@ -92,7 +96,6 @@ class Menu extends Component {
                     }); 
                 }
               }
-              else console.log('km no calculados')              
             });
     }
 
@@ -115,16 +118,24 @@ class Menu extends Component {
               if(res[0].bool){
                 if(this.props.user==="Conductor"){
                     this.setState({
-                        kmCobrar:0
-                    })
+                        kmCobrar:0        
+                    }, ()=>toaster.notify('   Los kilometros fueron cobrados   ', {
+                        duration: 10000
+                      }))
                 }
                 else{
                     this.setState({
                         kmPagar:0
-                    }); 
+                    }, ()=>toaster.notify('   Los kilometros fueron pagados   ', {
+                        duration: 10000
+                      })); 
                 }
               }
-              else console.log('Accion no realizada')              
+              else {
+                toaster.notify('   Los kilometros no cobrados/pagados   ', {
+                    duration: 10000
+                  });
+              }                 
             });
     }
 

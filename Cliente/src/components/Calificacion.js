@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './Calificacion.css'
 import star from '../images/estrella.svg'
+import toaster from 'toasted-notes';
+
+import 'toasted-notes/src/styles.css'; // optional styles
 
 
 class Calificaion extends Component {
@@ -27,9 +30,13 @@ class Calificaion extends Component {
     .then(res => res.json())
     .then(res => {
       if(res[0].bool){
-        console.log("viaje terminado exitosamente")
-      }
-      else {console.log("el viaje no pudo ser terminado")}
+        toaster.notify('   El viaje fue almacenado exitosamente!   ', {
+        duration: 10000
+      })}
+      else {
+        toaster.notify('   El viaje no pudo ser almacenado   ', {
+        duration: 10000
+      })}
       
       this.props.callback({
         pagina:"Menu-Usuario",

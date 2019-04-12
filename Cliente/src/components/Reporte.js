@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './Reporte.css'
 import Mapa from './Mapa';
+import toaster from 'toasted-notes';
+
+import 'toasted-notes/src/styles.css'; // optional styles 
 
 class Reporte extends Component {
   constructor(props) {
@@ -46,10 +49,14 @@ class Reporte extends Component {
     .then(res => res.json())
     .then(res => {
       if(res[0].bool){
-        console.log("Reporte realizado exitosamente")
+          toaster.notify('   El reporte fue realizado correctamente   ', {
+          duration: 10000
+        })
       }
-      else {console.log("Reporte sin terminar")}
-      
+      else {
+        toaster.notify('   El reporte no pudo ser realizado   ', {
+        duration: 10000
+      })}
       this.props.callback('Menu-Conductor');});
   }
 

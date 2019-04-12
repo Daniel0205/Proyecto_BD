@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Login.css";
+import toaster from 'toasted-notes';
 
+import 'toasted-notes/src/styles.css'; // optional styles
 
 class Login extends Component {
   constructor(props) {
@@ -40,6 +42,9 @@ class Login extends Component {
               cellphone: this.state.cellphone,
               pagina: "Menu-"+this.state.user
             });
+          }
+          else{
+            toaster.notify("Usuario o contraseña incorrecto");
           }})
       });
   }

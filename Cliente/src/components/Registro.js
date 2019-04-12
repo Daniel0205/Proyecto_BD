@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import toaster from 'toasted-notes';
 
+import 'toasted-notes/src/styles.css'; // optional styles
 import './Registro.css';
 
 class Registro extends Component {
@@ -120,10 +122,31 @@ class Registro extends Component {
     .then(res => res.json())
     .then(res => {
       if(res[0].bool){
-        console.log(msj + " actualizados exitosamente")
+        if(this.props.tipo==='Actualizar'){
+          toaster.notify('   Los datos fueron actualizados correctamente   ', {
+          duration: 10000
+          })
+        }
+        else{
+          toaster.notify('   Usuario registrado correctamente   ', {
+            duration: 10000
+            })
+        }
       }
-      else {console.log(msj +" sin actualizar")}});
+      else {
+        if(this.props.tipo==='Actualizar'){
+          toaster.notify('   Los datos  no fueron actualizados correctamente   ', {
+            duration: 10000
+            })
+        }
+        else{
+          toaster.notify('   Error al registrar usuario   ', {
+            duration: 10000
+            })
+        }
+      }
       this.props.callback(callback);
+    })
   }
 
   actualizarDatos(event){

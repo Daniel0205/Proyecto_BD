@@ -31,7 +31,7 @@ pool.on('error', function (err, client) {
 
 //export the query method for passing queries to the pool
 function query(text, values, callback) {
-  console.log('query:', text, values);
+  
   return pool.query(text, values, callback);
 };
 
@@ -62,7 +62,6 @@ app.post("/login", function (req, res) {
       if(err) {
           return console.error('error running query', err);
       }
-      console.log(result)
       if(result.rows[0].login===" "){
         res.json([{login:false}]);
       }
@@ -74,7 +73,6 @@ app.post("/login", function (req, res) {
     });
   });
 
-  console.log(req.body)
 });
 
 app.post("/favoritos", function (req, res) {
@@ -102,7 +100,6 @@ app.post("/favoritos", function (req, res) {
     });
   });
 
-  console.log(req.body)
 });
 
 
@@ -139,7 +136,6 @@ app.post("/AddFavoritos", function (req, res) {
           }
       }); 
   });
-  console.log(req.body)
 });
 
 
@@ -188,9 +184,6 @@ app.post("/consultarViajes", function (req, res) {
       
     });
   });
-  
-
-  console.log(req.body)
 });
 
 
@@ -228,7 +221,6 @@ app.post("/encontrarConductor", function (req, res) {
       
     });
   });
-  console.log(req.body)
 });
 
 app.post("/distancia", function (req, res) {
@@ -254,8 +246,6 @@ app.post("/distancia", function (req, res) {
       }
     });
   });
-
-  console.log(req.body)
 });
 
 app.post("/PagarCobrar", function (req, res) {
@@ -288,8 +278,6 @@ app.post("/PagarCobrar", function (req, res) {
       }
     });
   });
-
-  console.log(req.body)
 });
 
 
@@ -324,8 +312,6 @@ app.post("/KmPagarCobrar", function (req, res) {
       }
     });
   });
-
-  console.log(req.body)
 });
 
 app.post("/KmUsados", function (req, res) {
@@ -359,8 +345,6 @@ app.post("/KmUsados", function (req, res) {
       }
     });
   });
-
-  console.log(req.body)
 });
 
 
@@ -406,8 +390,6 @@ app.post("/insertarUser", function (req, res) {
       }
     });
   });
-
-  console.log(req.body)
 });
 
 
@@ -441,9 +423,6 @@ app.post("/finalizarViaje", function (req, res) {
     });   
 
   });
-
-  console.log(req.body)
-  console.log("Viaje guardado");
 });
 
 
@@ -480,10 +459,6 @@ app.post("/reporte", function (req, res) {
       }
     });
   });
-
-  console.log(req.body)
-
-  console.log("Estado actualizado");
 });
 
 
@@ -510,15 +485,10 @@ app.post("/getAutos", function (req, res) {
         return console.error('error running query', err);
       }
       else{
-        console.log(result.rows)
         res.json([{autosDisponibles:result.rows}]);
       }
     });
   });
-
-  console.log(req.body)
-
-  console.log("Estado actualizado");
 });
 
 app.post("/actualizarDatos", function (req, res) {
@@ -593,14 +563,10 @@ app.post("/getDatos", function (req, res) {
         return console.error('error running query', err);
       }
       else{
-        console.log(result.rows[0])
         res.json([result.rows[0]]);
       }
     });
   });
-  console.log(req.body)
-
-  console.log("Datos Enviados");
 });
 
 app.listen(3001, function () {
