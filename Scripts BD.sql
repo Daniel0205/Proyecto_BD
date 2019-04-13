@@ -111,20 +111,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
---agregar viajes como no cobrado
-
-CREATE OR REPLACE FUNCTION insertarViaje() RETURNS TRIGGER AS $$
-BEGIN
-
-	INSERT INTO Conductor_Viajes(id_viaje,celular_conductor,cobrado) VALUES (NEW.id_viaje,NEW.celular_conductor,false);
-	RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS agregarViaje ON viajes;
-CREATE TRIGGER agregarViaje AFTER INSERT ON viajes FOR EACH ROW EXECUTE PROCEDURE insertarViaje();
-
 --Funcion para insertar puntos que no estan insertados
 CREATE OR REPLACE FUNCTION insertarPunto(GEOGRAPHY,TEXT) RETURNS BOOL AS $$
 DECLARE
@@ -140,6 +126,31 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+--agregar viajes como no cobrado
+
+CREATE OR REPLACE FUNCTION insertarViaje() RETURNS TRIGGER AS $$
+BEGIN
+
+	INSERT INTO Conductor_Viajes(id_viaje,celular_conductor,cobrado) VALUES (NEW.id_viaje,NEW.celular_conductor,false);
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS agregarViaje ON viajes;
+CREATE TRIGGER agregarViaje AFTER INSERT ON viajes FOR EACH ROW EXECUTE PROCEDURE insertarViaje();
+
+--Trigger que cambia la posicion de un conductor a el lugar de destino en el cual hizo el viaje
+CREATE OR REPLACE FUNCTION cambiarPos() RETURNS TRIGGER AS $$
+BEGIN
+		UPDATE conductor
+		SET posicion_actual = NEW.id_pos_destino
+		WHERE celular = NEW.celular_conductor;
+		RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS actualPosicion ON viajes;
+CREATE TRIGGER actualPosicion AFTER INSERT ON viajes FOR EACH ROW EXECUTE PROCEDURE cambiarPos();
 -------------------------------------------VIEWS-------------------------------------------
 CREATE VIEW kmconductor AS 
 (Select celular as conductor,SUM(ST_DistanceSphere(ST_ASTEXT(id_pos_origen),ST_ASTEXT(id_pos_destino)))/1000 as km
@@ -167,19 +178,6 @@ DROP VIEW IF EXISTS promestrellas;
 CREATE VIEW promEstrellas AS (SELECT celular as celular,AVG(calificacion) as estrellas
 FROM viajes right outer join conductor on viajes.celular_conductor=conductor.celular
 GROUP BY celular);
-
-/*
-CREATE OR REPLACE FUNCTION calcularCercania() RETURNS TRIGGER AS $$
-BEGIN
-	UPDATE viajes 
-		SET celular_conductor = hallarConductor(ST_ASTEXT(NEW.id_pos_origen),NEW.id_viaje) 
-		WHERE id_viaje = NEW.id_viaje;
-	RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS cercania ON viajes;
-CREATE TRIGGER cercania AFTER INSERT ON viajes FOR EACH ROW EXECUTE PROCEDURE calcularCercania();*/
 ------------------Crear Usuarios-------------------------------------
 /*
 --Usuario Cliente
