@@ -1,12 +1,17 @@
+
+////////////////////////////////////////////
+///////////MODULOS  IMPORTADOS//////////////
+////////////////////////////////////////////
+var check = require('./validaciones.js')();
+
 var express = require("express");
 var app = express();
-/*
-var pgp = require('pg-promise')(/*options)
-var db = pgp('postgres://postgres:1234@localhost:5432/NotThatEasyTaxi')
-*/
 
 const Pool = require('pg-pool');
 
+//////////////////////////////////////////////////////
+/////CONFIGURACION DE LA PISCINA DE USUARIOS//////////
+//////////////////////////////////////////////////////
 var config = {
   user: 'postgres', //env var: PGUSER
   database: 'NotThatEasyTaxi', //env var: PGDATABASE
@@ -44,37 +49,54 @@ function connect(callback) {
 var bodyParser = require("body-parser"); // middleware  to handle HTTP POST request
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // to support URL-encoded bodies
+///////////////////////////////////////////////////////////////////////////////////////////
 
 
+////////////////////////////////////////////
+///////////////////LOGIN////////////////////
+////////////////////////////////////////////
+
+//Respuesta de la peticion del login
 app.post("/login", function (req, res) {
 
-  let str = 'SELECT login('+req.body.Username+',\''+req.body.Password+'\')';
-	connect(function(err, client, done) {
-    if(err) {
-        return console.error('error fetching client from pool', err);
-        }
-    //use the client for executing the query
-     console.log(str);
-     client.query(str, (err, result)=> {
-      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
-      done(err);
-
+  if(validacionLogin(req.body)){
+    let str = 'SELECT login('+req.body.Username+',\''+req.body.Password+'\')';
+    connect(function(err, client, done) {
       if(err) {
-          return console.error('error running query', err);
-      }
-      if(result.rows[0].login===" "){
-        res.json([{login:false}]);
-      }
-      else{
-        res.json([{ user:result.rows[0].login,login:true}]);
-      }
-      
-      //output: 1
+          return console.error('error fetching client from pool', err);
+          }
+      //use the client for executing the query
+      console.log(str);
+      client.query(str, (err, result)=> {
+        //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+        done(err);
+
+        if(err) {
+            return console.error('error running query', err);
+        }
+        if(result.rows[0].login===" "){
+          res.json([{login:false}]);
+        }
+        else{
+          res.json([{ user:result.rows[0].login,login:true}]);
+        }
+        
+      });
     });
-  });
-
+  }
+  else{
+    res.json([{login:false}]);
+  }
 });
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////QUERYS Y CONSULTAS A LA BASE DE DATOS/////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Respuesta de la peticion de todos los puntos favoritos de un determinado usuario
 app.post("/favoritos", function (req, res) {
 
   let str ='SELECT DISTINCT ST_X(ST_AsText(id_pos)) as longitud, ST_Y(ST_AsText(id_pos)) as latitud ,direccion '
@@ -103,7 +125,7 @@ app.post("/favoritos", function (req, res) {
 });
 
 
-
+//Agrega un punto favorito y lo relaciona con un cliente en la base de datos 
 app.post("/AddFavoritos", function (req, res) {
 
   let str = 'SELECT insertarPunto(\'POINT('+req.body.longitud+' '+req.body.latitud +')\',\''+req.body.descripcion+'\')';
@@ -139,7 +161,7 @@ app.post("/AddFavoritos", function (req, res) {
 });
 
 
-
+//Consulta y envia los viajes realizados por un determinado conductor o por un cliente a el Front-end
 app.post("/consultarViajes", function (req, res) {
 
  
@@ -185,7 +207,7 @@ app.post("/consultarViajes", function (req, res) {
   });
 });
 
-
+//Envia la informacion del cliente mas cercano a un punto 
 app.post("/encontrarConductor", function (req, res) {
 
   let str = 'SELECT * from (conductor natural join promestrellas), posicion WHERE conductor.posicion_Actual=posicion.id_pos AND '+
@@ -222,6 +244,7 @@ app.post("/encontrarConductor", function (req, res) {
   });
 });
 
+//Consulta y envia la distacia entre dos puntos dados 
 app.post("/distancia", function (req, res) {
 
   let str = 'SELECT distancia(\'POINT('+req.body.longitudOrigen+' '+req.body.latitudOrigen+
@@ -247,8 +270,8 @@ app.post("/distancia", function (req, res) {
   });
 });
 
+//Cambia todos los viajes realizados hasta el momento de un conductor o un cliente a estado cobrado y pagado respectivamente
 app.post("/PagarCobrar", function (req, res) {
-
   
   let str ='';
   if(req.body.tipo=="Conductor"){
@@ -279,10 +302,9 @@ app.post("/PagarCobrar", function (req, res) {
   });
 });
 
-
+//Consulta los km que tiene para cobrar y pagar un usuario conductor o un usuario cliente en la base de datos
 app.post("/KmPagarCobrar", function (req, res) {
 
-  
   let str ='';
   if(req.body.tipo=="Conductor"){
     str='SELECT * FROM kmConductorCobrar WHERE conductor='+req.body.Username ;
@@ -313,6 +335,7 @@ app.post("/KmPagarCobrar", function (req, res) {
   });
 });
 
+//Consulta los kilometros usados o transportados por un usuario o un cliente 
 app.post("/KmUsados", function (req, res) {
 
   
@@ -346,9 +369,8 @@ app.post("/KmUsados", function (req, res) {
   });
 });
 
-
+//Ingresa un nuevo usuario en la base de datos
 app.post("/insertarUser", function (req, res) {
-
   
   let str ='';
 
@@ -393,7 +415,7 @@ app.post("/insertarUser", function (req, res) {
 
 
 
-
+//Almacena un nuevo viaje en la base de datos, junto con sus respectivos puntos de origen y destino
 app.post("/finalizarViaje", function (req, res) {
 
   let str = 'SELECT insertarPunto(\'POINT('+req.body.longitudOrigen+' '+req.body.latitudOrigen+')\',\''+req.body.descripcionOrigen+'\')';
@@ -424,9 +446,8 @@ app.post("/finalizarViaje", function (req, res) {
   });
 });
 
-
+//Actualiza el estado actual de un usuario conductor 
 app.post("/reporte", function (req, res) {
-
   
   let str = 'SELECT insertarPunto(\'POINT('+req.body.longitud+' '+req.body.latitud+')\',\''+req.body.descripcion+'\')';
 
@@ -460,7 +481,7 @@ app.post("/reporte", function (req, res) {
   });
 });
 
-
+//Envia la informacion de todos los autos que no estan en uso actualmente en la base de datos
 app.post("/getAutos", function (req, res) {
 
   
@@ -490,47 +511,52 @@ app.post("/getAutos", function (req, res) {
   });
 });
 
+//Actualiza los datos de un determinado usuario en la base de datos
 app.post("/actualizarDatos", function (req, res) {
 
-  let str='',psw='';
+  if(validacionActualizar(req.body)){
+    let str='',psw='';
 
-  if(req.body.password!==''){
-    psw=', contrasena=crypt(\''+req.body.password+'\', gen_salt(\'md5\'))';
-  } 
-  if(req.body.user==='Usuario'){
-    str ='UPDATE cliente SET nombres=\''+req.body.nombre+'\', apellidos=\''+req.body.apellido+'\', genero=\''+req.body.genero+'\','+
-         'tarjeta_credito='+req.body.tarjeta+',direccion_residencia=\''+req.body.direccion+'\''+ psw+' where celular='+req.body.cellphone;
+    if(req.body.password!==''){
+      psw=', contrasena=crypt(\''+req.body.password+'\', gen_salt(\'md5\'))';
+    } 
+    if(req.body.user==='Usuario'){
+      str ='UPDATE cliente SET nombres=\''+req.body.nombre+'\', apellidos=\''+req.body.apellido+'\', genero=\''+req.body.genero+'\','+
+          'tarjeta_credito='+req.body.tarjeta+',direccion_residencia=\''+req.body.direccion+'\''+ psw+' where celular='+req.body.cellphone;
+    }
+    else{
+      str='UPDATE conductor SET nombres=\''+req.body.nombre+'\', apellidos=\''+req.body.apellido+'\', genero=\''+req.body.genero+
+      '\', placa=\''+req.body.placa+'\''+ psw+' where celular='+req.body.cellphone;
+    }
+
+
+    connect(function(err, client, done) {
+      if(err) {
+          return console.error('error fetching client from pool', err);
+          }
+      //use the client for executing the query
+
+      client.query(str,(err, result) =>{
+        console.log(str)
+        //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+        done(err);
+        if(err) {
+          res.json([{bool:false}]);
+          return console.error('error running query', err);
+        }
+        else{
+          res.json([{bool:true}]);
+        }
+      });
+    });
   }
   else{
-    str='UPDATE conductor SET nombres=\''+req.body.nombre+'\', apellidos=\''+req.body.apellido+'\', genero=\''+req.body.genero+
-    '\', placa=\''+req.body.placa+'\''+ psw+' where celular='+req.body.cellphone;
+    res.json([{bool:false}]);
   }
-
-
-  connect(function(err, client, done) {
-    if(err) {
-        return console.error('error fetching client from pool', err);
-        }
-    //use the client for executing the query
-
-    client.query(str,(err, result) =>{
-      console.log(str)
-      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
-      done(err);
-      if(err) {
-        res.json([{bool:false}]);
-        return console.error('error running query', err);
-      }
-      else{
-        res.json([{bool:true}]);
-      }
-    });
-  });
 });
 
 
-
-
+//Retorna los datos relacionados a un determinado usuario
 app.post("/getDatos", function (req, res) {
 
   let str
@@ -567,7 +593,13 @@ app.post("/getDatos", function (req, res) {
     });
   });
 });
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+/////////////////////////////////////////////////////
+////////////CONFIGURACION DEL PUERTO ////////////////
+/////////////////////////////////////////////////////
 app.listen(3001, function () {
   console.log("Example app listening on port 3001!");
 });
+////////////////////////////////////////////////////

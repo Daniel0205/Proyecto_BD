@@ -199,11 +199,11 @@ CREATE USER castilloLord WITH PASSWORD 'profe-paseme-en-5';
 ALTER USER castilloLord SUPERUSER;
 */
 --------------Insertando valores de ejemplo---------------------------
-INSERT INTO cliente VALUES (3222204261,crypt('1234', gen_salt('md5')),'Steban','Cadena','M',43411400357278,'Cra 32b #41-53');
-INSERT INTO cliente VALUES (1234,crypt('1234', gen_salt('md5')),'Steban','Cadena','M',43411400357278,'Cra 32b #41-53');
-INSERT INTO taxi VALUES ('ABC123','Nexo','Hyundai','G',2013,984224);
-INSERT INTO taxi VALUES ('CBA321','Nexo','Hyundai','P',2018,763522);
-INSERT INTO taxi VALUES ('VCB456','Nexo','Hyundai','P',2017,643128);
+INSERT INTO cliente VALUES (3222204261,crypt('1234', gen_salt('md5')),'Steban','Cadena','M',4341140110,'Cra 32b #41-53');
+INSERT INTO cliente VALUES (1234,crypt('1234', gen_salt('md5')),'Steban','Cadena','M',4341140110,'Cra 32b #41-53');
+INSERT INTO taxi VALUES ('ABC123','Nexo','Hyundai','G',2013,98422411);
+INSERT INTO taxi VALUES ('CBA321','Nexo','Hyundai','P',2018,76352211);
+INSERT INTO taxi VALUES ('VCB456','Nexo','Hyundai','P',2017,64312811);
 INSERT INTO conductor VALUES (3218021197,crypt('1234', gen_salt('md5')),'Arjen','Granada','M','ABC123',true,'POINT(-76.516919 3.420180)');
 INSERT INTO conductor VALUES (3456733214,crypt('1234', gen_salt('md5')),'Alex','Herrera','M','CBA321',false,'POINT(-76.530014 3.372059)');
 INSERT INTO conductor VALUES (3127395835,crypt('1234', gen_salt('md5')),'Rosa','Cadena','F','VCB456',true,'POINT(-76.536722 3.442843)');

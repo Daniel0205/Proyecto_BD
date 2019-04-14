@@ -39,8 +39,9 @@ class ListaViaje extends Component {
   render() {
 
     let viajes = this.state.viajes;
-    const viajesArray = viajes.map((x) => {return(<ConsultaViaje key={x.id} user={this.props.user} datos={x}/>)});
+    let viajesArray = viajes.map((x) => {return(<ConsultaViaje key={x.id} user={this.props.user} datos={x}/>)});
 
+    if(viajes.length===0)viajesArray=<h2>No se encontraron viajes realizados</h2>
     /**/
     return (
         <div className='mainv'>
