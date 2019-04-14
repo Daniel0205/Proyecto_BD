@@ -163,6 +163,21 @@ html {
     margin-bottom: 1%;
 }
 
+#cambiar input{
+    display: block;
+    background: none;
+    font-size: 16px;
+    border-width: 0;
+    line-height: 1.9;
+    width: 100%;
+    color: #ffffff;
+    transition: all 0.28s ease;
+    box-shadow: none;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: #0f99c6;
+}
+
 .Footer {
     position: absolute;
     bottom: 0;
