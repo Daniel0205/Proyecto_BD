@@ -1,0 +1,5 @@
+FROM node:10.13-alpine
+ENV NODE_ENV production
+COPY ["/Cliente/package.json", "/Cliente/package-lock.json*", "/Cliente/", "./"]
+EXPOSE 3000
+CMD npm start

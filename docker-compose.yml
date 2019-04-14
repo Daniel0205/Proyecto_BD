@@ -1,0 +1,32 @@
+version: '2.0'
+
+services:
+
+  cliente:
+    image: cliente
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+    depends_on:
+      - servidor
+  servidor:
+    image: servidor
+    #~ environment:
+      #~ NODE_ENV: production
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:1234@db:5432/NotThatEasyTaxi
+      #~ - PORT=3001   
+  db:
+    image: db
+    ports:
+      - 5433:5432    
+    environment:
+      POSTGRES_DB: NotThatEasyTaxi
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      #~ ALLOW_IP_RANGE: 0.0.0.0/0

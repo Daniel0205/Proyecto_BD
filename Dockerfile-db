@@ -1,0 +1,4 @@
+FROM postgres:10
+COPY ["NotThatEasyTaxi.sql", "./docker-entrypoint-initdb.d/"]
+RUN apt-get update && apt-get install postgis postgresql-10-postgis-scripts -y
+

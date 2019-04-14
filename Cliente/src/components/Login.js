@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./Login.css";
-import toaster from 'toasted-notes';
-
-import 'toasted-notes/src/styles.css'; // optional styles
+import toaster from "toasted-notes";
+import "toasted-notes/src/styles.css"; // optional styles
 
 class Login extends Component {
   constructor(props) {
@@ -15,17 +14,15 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
   handleClick() {
-    this.props.callback({pagina:"Registro"});
+    this.props.callback({ pagina: "Registro" });
   }
-
 
   handleSubmit(event) {
     event.preventDefault();
     var expreg = /^[0-9]{10}$/;
 
-    if(expreg.test(this.state.cellphone) || this.state.cellphone==='1234'){
+    if (expreg.test(this.state.cellphone) || this.state.cellphone === "1234") {
       const { cellphone, psw } = this.state;
       fetch("/login", {
         method: "POST",
@@ -37,32 +34,26 @@ class Login extends Component {
       })
         .then(res => res.json())
         .then(res => {
-          this.setState(res[0],()=>{
-
-            if(this.state.login){
-              
+          this.setState(res[0], () => {
+            if (this.state.login) {
               this.props.callback({
                 cellphone: this.state.cellphone,
-                pagina: "Menu-"+this.state.user
+                pagina: "Menu-" + this.state.user
               });
-            }
-            else{
+            } else {
               toaster.notify("   Usuario o contraseña incorrecto    ");
-            }})
+            }
+          });
         });
-    }
-    else{
+    } else {
       toaster.notify("   El celular deben ser 10 numeros    ");
     }
   }
 
-
-
-//Funcion para actualizar las variables ingresadas en el login
+  //Funcion para actualizar las variables ingresadas en el login
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
 
   render() {
     const { cellphone, psw } = this.state;
@@ -79,7 +70,7 @@ class Login extends Component {
             onChange={this.onChange}
           />
           <p>Contraseña:</p>
-          <i className="logo"></i>
+          <i className="logo" />
           <input
             type="password"
             name="psw"

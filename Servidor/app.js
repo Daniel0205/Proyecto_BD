@@ -3,7 +3,6 @@
 ///////////MODULOS  IMPORTADOS//////////////
 ////////////////////////////////////////////
 var check = require('./validaciones.js')();
-
 var express = require("express");
 var app = express();
 
@@ -16,7 +15,7 @@ var config = {
   user: 'postgres', //env var: PGUSER
   database: 'NotThatEasyTaxi', //env var: PGDATABASE
   password: '1234', //env var: PGPASSWORD
-  host: '127.0.0.1', // Server hosting the postgres database
+  host: 'db', // Server hosting the postgres database
   port: 5432, //env var: PGPORT
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
@@ -600,6 +599,6 @@ app.post("/getDatos", function (req, res) {
 ////////////CONFIGURACION DEL PUERTO ////////////////
 /////////////////////////////////////////////////////
 app.listen(3001, function () {
-  console.log("Example app listening on port 3001!");
+  console.log("Servidor escuchando en el puerto 3001!");
 });
 ////////////////////////////////////////////////////
