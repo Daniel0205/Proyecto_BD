@@ -23,30 +23,37 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { cellphone, psw } = this.state;
-    fetch("/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ Username: cellphone, Password: psw })
-    })
-      .then(res => res.json())
-      .then(res => {
-        this.setState(res[0],()=>{
-          console.log(res[0])
-          if(this.state.login){
-            
-            this.props.callback({
-              cellphone: this.state.cellphone,
-              pagina: "Menu-"+this.state.user
-            });
-          }
-          else{
-            toaster.notify("Usuario o contraseña incorrecto");
-          }})
-      });
+    var expreg = /^[0-9]{10}$/;
+
+    if(expreg.test(this.state.cellphone) || this.state.cellphone==='1234'){
+      const { cellphone, psw } = this.state;
+      fetch("/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ Username: cellphone, Password: psw })
+      })
+        .then(res => res.json())
+        .then(res => {
+          this.setState(res[0],()=>{
+
+            if(this.state.login){
+              
+              this.props.callback({
+                cellphone: this.state.cellphone,
+                pagina: "Menu-"+this.state.user
+              });
+            }
+            else{
+              toaster.notify("   Usuario o contraseña incorrecto    ");
+            }})
+        });
+    }
+    else{
+      toaster.notify("   El celular deben ser 10 numeros    ");
+    }
   }
 
 
@@ -63,7 +70,7 @@ class Login extends Component {
       <div className="loginp">
         <form className="form" name="login" onSubmit={this.handleSubmit}>
           <h1>Login</h1>
-          <p>Username:</p>
+          <p>Celular:</p>
           <input
             type="text"
             name="cellphone"
@@ -71,7 +78,7 @@ class Login extends Component {
             value={cellphone}
             onChange={this.onChange}
           />
-          <p>Password:</p>
+          <p>Contraseña:</p>
           <i className="logo"></i>
           <input
             type="password"

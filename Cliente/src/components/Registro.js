@@ -23,6 +23,7 @@ class Registro extends Component {
     this.cancelar = this.cancelar.bind(this)
     this.datosPersonalesC = this.datosPersonalesC.bind(this);
     this.cambiarAuto = this.cambiarAuto.bind(this);
+    this.validarCampos = this.validarCampos.bind(this);
     
   }
 
@@ -60,6 +61,96 @@ class Registro extends Component {
 
     }
 
+  }
+
+  validarCampos(){
+    let str= true;
+
+    var expreg = /^[0-9]{10}$/;
+
+    if(!(expreg.test(this.state.cellphone)) || this.state.cellphone===''){
+      toaster.notify('Ingrese un numero de celular valido ([0-9]) de tamano 10 \n')
+      str= false;
+    }
+    
+    expreg = /^[A-Za-z ]{3,20}$/;
+
+    if(!(expreg.test(this.state.nombre))|| this.state.nombre===''){
+      toaster.notify('Ingrese un nombre valido ([A-Z o a-z]) de tamano 3-20 \n')
+      str= false;
+    }
+
+    if(!(expreg.test(this.state.apellido)) || this.state.apellido===''){
+      toaster.notify('Ingrese un apellido valido ([A-Z o a-z]) de tamano 3-20 \n')
+      str= false;
+    }
+
+    if(this.state.genero==="Select"){
+      toaster.notify('Seleccione un genero\n')
+      str= false;
+    }   
+
+    if(this.props.user==="Usuario"){
+
+      console.log("entro")
+      expreg = /^[A-Za-z0-9 -#/]{5,25}$/;
+
+      if(!(expreg.test(this.state.direccion))|| this.state.direccion===''){
+        toaster.notify('Ingrese una direcion valida ([A-Za-z0-9 -#/]) de tamano 5-25 \n')
+        str= false;
+      }
+
+      expreg = /^[0-9]{10}$/;
+
+      if(!(expreg.test(this.state.tarjeta)) || this.state.tarjeta===''){
+        toaster.notify('Ingrese un numero de tarjeta valido ([0-9]) de tamano 10 \n')
+        str= false;
+      }
+    }
+
+    if(this.props.user==="Conductor"){
+
+      expreg = /^[A-Z]{3}[0-9]{3}$/;
+
+      if(!(expreg.test(this.state.placa))|| this.state.placa===''){
+        toaster.notify('Ingrese una placa valida con tres letras mayusculas y tres numeros \n')
+        str= false;
+      }
+
+      expreg = /^[A-Za-z ]{3,10}$/;
+
+      if(!(expreg.test(this.state.modelo))|| this.state.modelo===''){
+        toaster.notify('Ingrese un modelo valido ([A-Z o a-z]) de tamano 3-10\n')
+        str= false;
+      }
+
+      expreg = /^[A-Za-z ]{3,10}$/;
+
+      if(!(expreg.test(this.state.modelo))|| this.state.modelo===''){
+        toaster.notify('Ingrese un modelo valido ([A-Z o a-z]) de tamano 3-10\n')
+        str= false;
+      }
+
+      if(this.state.baul==="Select2"){
+        toaster.notify('Seleccione un tipo de baul\n')
+        str= false;
+      } 
+
+      if(this.state.fecha==="Select1"){
+        toaster.notify('Seleccione una fecha de fabricacion\n')
+        str= false;
+      }        
+
+      expreg = /^[0-9]{8}$/;
+
+      if(!(expreg.test(this.state.soat)) || this.state.soat===''){
+        toaster.notify('Ingrese un numero de soat valido ([0-9]) de tamano 8 \n')
+        str= false;
+      }
+    
+    }
+
+    return str
   }
 
   cancelar(){
@@ -109,44 +200,47 @@ class Registro extends Component {
       msj = "Usuario"
       callback = "Login"
     }
-    
 
-    fetch(ruta, {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(this.state)
-    })
-    .then(res => res.json())
-    .then(res => {
-      if(res[0].bool){
-        if(this.props.tipo==='Actualizar'){
-          toaster.notify('   Los datos fueron actualizados correctamente   ', {
-          duration: 10000
-          })
-        }
-        else{
-          toaster.notify('   Usuario registrado correctamente   ', {
+    let validar = this.validarCampos();
+
+    if(validar){   
+      fetch(ruta, {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.state)
+      })
+      .then(res => res.json())
+      .then(res => {
+        if(res[0].bool){
+          if(this.props.tipo==='Actualizar'){
+            toaster.notify('   Los datos fueron actualizados correctamente   ', {
             duration: 10000
             })
+          }
+          else{
+            toaster.notify('   Usuario registrado correctamente   ', {
+              duration: 10000
+              })
+          }
         }
-      }
-      else {
-        if(this.props.tipo==='Actualizar'){
-          toaster.notify('   Los datos  no fueron actualizados correctamente   ', {
-            duration: 10000
-            })
+        else {
+          if(this.props.tipo==='Actualizar'){
+            toaster.notify('   Los datos  no fueron actualizados correctamente   ', {
+              duration: 10000
+              })
+          }
+          else{
+            toaster.notify('   Error al registrar usuario   ', {
+              duration: 10000
+              })
+          }
         }
-        else{
-          toaster.notify('   Error al registrar usuario   ', {
-            duration: 10000
-            })
-        }
-      }
-      this.props.callback(callback);
-    })
+        this.props.callback(callback);
+      })
+    }
   }
 
   actualizarDatos(event){
@@ -156,7 +250,7 @@ class Registro extends Component {
         var found = this.state.autosDisponibles.find(function(element) {
           return element.placa===event.target.value;
         });
-        console.log(found)
+
         this.setState(found)
       break;
       case 'cellphone':
@@ -344,7 +438,7 @@ class Registro extends Component {
       boton = "Actualizar Datos";
     }
 
-    console.log(this.state)
+
 
     switch(this.state.user){
       case 'Usuario':

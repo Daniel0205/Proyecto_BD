@@ -204,7 +204,6 @@ INSERT INTO cliente VALUES (1234,crypt('1234', gen_salt('md5')),'Steban','Cadena
 INSERT INTO taxi VALUES ('ABC123','Nexo','Hyundai','G',2013,984224);
 INSERT INTO taxi VALUES ('CBA321','Nexo','Hyundai','P',2018,763522);
 INSERT INTO taxi VALUES ('VCB456','Nexo','Hyundai','P',2017,643128);
-INSERT INTO taxi VALUES ('******','DESCONOCIDO','DESCONOCIDO','N',0,0);
 INSERT INTO conductor VALUES (3218021197,crypt('1234', gen_salt('md5')),'Arjen','Granada','M','ABC123',true,'POINT(-76.516919 3.420180)');
 INSERT INTO conductor VALUES (3456733214,crypt('1234', gen_salt('md5')),'Alex','Herrera','M','CBA321',false,'POINT(-76.530014 3.372059)');
 INSERT INTO conductor VALUES (3127395835,crypt('1234', gen_salt('md5')),'Rosa','Cadena','F','VCB456',true,'POINT(-76.536722 3.442843)');

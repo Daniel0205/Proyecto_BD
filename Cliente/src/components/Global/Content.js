@@ -77,11 +77,8 @@ class Content extends Component {
   }
 
   render() {
-    console.log(this.state)
-    /* 
-    <User URL= {userLogo} msj="Usuario" callback={this.setPage}/>
-    <User URL= {taxistaLogo} msj="Conductor" callback={this.setPage}/>
-    */
+
+ 
     switch(this.state.pagina){
       case 'Login':
         return (
@@ -152,7 +149,6 @@ class Content extends Component {
             <Calificacion viaje={this.state} callback={this.finalizarViaje}/>
           );
       default:
-      console.log("entro"); 
           break;
     }
   }  

@@ -114,7 +114,7 @@ class Menu extends Component {
           })
           .then(res => res.json())
           .then(res => {
-              console.log(res)
+
               if(res[0].bool){
                 if(this.props.user==="Conductor"){
                     this.setState({
@@ -180,9 +180,9 @@ class Menu extends Component {
                     <div className='kilometros'>
                         <h2 id="kp">Kilometros</h2>
                         <p className="ks">Kilometros transportados:</p>
-                        <p className="ks">{this.state.kmtransp} Km</p>
+                        <p className="ks">{this.state.kmtransp.toFixed(2)} Km</p>
                         <p className="ks">Kilometros a cobrar:</p>
-                        <p className="ks">{this.state.kmCobrar} Km</p>
+                        <p className="ks">{this.state.kmCobrar.toFixed(2)} Km</p>
                         <button onClick={this.cobrarPagarViajes} >Cobrar Viajes</button>
                     </div>
                 </div>
@@ -208,9 +208,9 @@ class Menu extends Component {
                     <div className='kilometros'>
                         <h2 id="kp">Kilometros</h2>
                         <p className="ks">Kilometros Usados:</p>
-                        <p className="ks">{this.state.kmUsados} Km</p>
+                        <p className="ks">{this.state.kmUsados.toFixed(2)} Km</p>
                         <p className="ks">Kilometros a Pagar:</p>
-                        <p className="ks">{this.state.kmPagar} Km</p>
+                        <p className="ks">{this.state.kmPagar.toFixed(2)} Km</p>
                         <button onClick={this.cobrarPagarViajes}   >Pagar Viajes</button>
                     </div>
                 </div>

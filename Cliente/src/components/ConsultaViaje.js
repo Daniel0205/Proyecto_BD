@@ -6,11 +6,11 @@ class ConsultaViaje extends Component {
 
   render() {
     let nombre = null;
-    console.log(this.props.datos)
+
     if (this.props.user==="Usuario"){
-        nombre =  <p>Nombre Del chofer: {this.props.datos.nombrechofer}</p>
+        nombre =  <p><b>Nombre Del chofer:</b> {this.props.datos.nombrechofer}</p>
     }
-    else{ nombre =  <p>Nombre Del cliente: {this.props.datos.nombrecliente}</p>}
+    else{ nombre =  <p><b>Nombre Del cliente:</b> {this.props.datos.nombrecliente}</p>}
 
 
     let pago = null,msj='';
@@ -18,25 +18,25 @@ class ConsultaViaje extends Component {
     if (this.props.user==="Usuario"){
       if(this.props.datos.pagado)msj='Si';
       else msj='No'
-      pago =  <p>Pagado: {msj}</p>
+      pago =  <p><b>Pagado:</b> {msj}</p>
     }
     else{ 
       if(this.props.datos.cobrado)msj='Si';
       else msj='No'
-      pago =  <p>Cobrado: {msj}</p>
+      pago =  <p><b>Cobrado:</b> {msj}</p>
     }
 
     return (
         <div className='ficha'>
             <h3>Viaje - {this.props.datos.id}</h3>
             {nombre}
-            <p>Punto de partida: {this.props.datos.descripcionorigen}</p>
-            <p>Punto de destino: {this.props.datos.descripciondestino} </p>
-            <p>Distancia: {this.props.datos.kmrecorridos} Km</p>
-            <p>Precio del viaje: ${this.props.datos.kmrecorridos*1500}</p>
-            <p>Fecha: {this.props.datos.fecha}</p>
+            <p><b>Punto de partida:</b> {this.props.datos.descripcionorigen}</p>
+            <p><b>Punto de destino:</b> {this.props.datos.descripciondestino} </p>
+            <p><b>Distancia: </b>{this.props.datos.kmrecorridos} Km</p>
+            <p><b>Precio del viaje: $</b>{(this.props.datos.kmrecorridos*1500).toFixed(2)}</p>
+            <p><b>Fecha:</b> {this.props.datos.fecha}</p>
             {pago}
-            <p>Calificacion: {this.props.datos.calificacion}</p>
+            <p><b>Calificacion:</b>{this.props.datos.calificacion}</p>
             <br></br>
         </div>
 

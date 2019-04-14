@@ -40,7 +40,7 @@ class SolicitudViaje extends Component {
 
   getPosicion(e){
     this.setState(e,()=> { 
-      console.log(this.state)
+
       if(this.state.descripcionDestino!=='' && this.state.descripcionOrigen!==''){
         this.setState({
           selected:true
@@ -57,7 +57,7 @@ class SolicitudViaje extends Component {
 
 
   render() {
-    console.log(this.state)
+
     return(
         <div className="prinv">
             <div className='soli'>

@@ -45,7 +45,7 @@ class Posicion extends Component {
           body: JSON.stringify({ Username: this.state.cellphone})
         })
           .then(res => res.json())
-          .then(res => this.setState({favoritos:res[0].favoritos},console.log(this.state)))
+          .then(res => this.setState({favoritos:res[0].favoritos}))
           .then(res => {
               this.setState({
                   favoritos:this.state.favoritos.map((x) => 
@@ -126,7 +126,7 @@ class Posicion extends Component {
     }
 
     render() {    
-        console.log(this.state)
+
 
         switch(this.state.seleccion){
             case "mapa":

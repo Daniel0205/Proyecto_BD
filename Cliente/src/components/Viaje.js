@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './Viaje.css'
+import toaster from 'toasted-notes';
+
+import 'toasted-notes/src/styles.css'; // optional styles
 
 
 class Viaje extends Component {
@@ -59,9 +62,11 @@ class Viaje extends Component {
     .then(res => res.json())
     .then(res => {
       if(res[0].bool){
-        console.log("favorito anadido exitosamente")
+        toaster.notify("  Punto anadido a favoritos   ");
       }
-      else {console.log("favorito sin anadir")}
+      else{
+        toaster.notify("   El punto no se pudo anadir a favoritos   ");
+      }
     }
     )
   }
@@ -111,23 +116,15 @@ class Viaje extends Component {
   mostrarConductor(){
     if(this.state.encontrado){
      return(
-      [<p key="1"> Placa del Auto: {this.state.placa} </p>,
-      <p key="2">celular: {this.state.celularConductor}</p>,
-      <p key="3">Nombre: {this.state.nombreConductor} </p>,
-      <p key="4">Numero de estrellas: {this.state.estrellas}</p>,
-      <p key="5">Posicion actual: {this.state.posicion}</p>]);
+      [<p key="1"><b>Placa del Auto:</b> {this.state.placa} </p>,
+      <p key="2"><b>celular:</b> {this.state.celularConductor}</p>,
+      <p key="3"><b>Nombre:</b> {this.state.nombreConductor} </p>,
+      <p key="4"><b>Numero de estrellas:</b> {this.state.estrellas}</p>,
+      <p key="5"><b>Posicion actual:</b> {this.state.posicion}</p>]);
     }
     else return(<p key="7">No se han encontrado choferes disponibles</p>)
 
   }
-  /*
-
-   
-
-            <h2>Informacion del chofer</h2>
-            {this.mostrarConductor()}
-
-  */
 
   render() {
     return (
@@ -135,11 +132,11 @@ class Viaje extends Component {
 
           <div className='cont'>
             <div className='lsd'>
-              <h2>Informacion del Viaje</h2>
-              <p>Punto de partida: {this.props.viaje.descripcionOrigen}</p>
-              <p>Punto de destino: {this.props.viaje.descripcionDestino} </p>
-              <p>Distancia: {this.state.distancia} Km</p>
-              <p>Precio del viaje: ${this.state.distancia*1500}</p>
+              <b><h2>Informacion del Viaje</h2></b>
+              <p><b>Punto de partida:</b> {this.props.viaje.descripcionOrigen}</p>
+              <p><b>Punto de destino:</b> {this.props.viaje.descripcionDestino} </p>
+              <p><b>Distancia:</b> {this.state.distancia} Km</p>
+              <p><b>Precio del viaje: $</b>{(this.state.distancia*1500).toFixed(2)}</p>
             </div>
             <div className='chofer'>
               <h2>Informacion del chofer</h2>

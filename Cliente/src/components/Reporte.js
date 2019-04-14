@@ -83,7 +83,7 @@ class Reporte extends Component {
 
   render() {
 
-    console.log(this.state)
+
     return (
       <div className="User-Mapa">
         <h2>Reporte de estado actual del chofer</h2>
