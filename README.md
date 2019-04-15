@@ -1,4 +1,10 @@
 # Proyecto final Bases de Datos
+
+-INTEGRANTES:  
+Jem Pool Suarez Muñoz (1630536)  
+Daniel Alejandro Diaz Ocampo (1629338)  
+Steban Cadena Giraldo(1670129)  
+
 NotThatEasyTaxy es un emprendimiento que quiere permitir a los usuarios de taxi de cualquier lugar del mundo, pedir un servicio desde una aplicación móvil. Esta aplicación es una versión super simplificada de aplicaciones como Uber que solo funciona de manera local.
 
 Este proyecto se compone de una interfaz que se visualiza a traves de un navegador de internet, que esta conectada a un REST API, que a su vez se conecta a una base de datos en PostgreSQL.
