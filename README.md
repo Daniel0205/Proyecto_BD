@@ -16,7 +16,7 @@ Esta aplicación esta en etapa de desarrollo y se construyó como parte del proy
 ```bash
 $ git clone https://github.com/Daniel0205/Proyecto_BD
 $ cd Proyecto_BD
-$ ./iniciar.sh
+$ sudo ./iniciar.sh
 ```
 Cuando el script se termine de ejecutar, aparecerá en la terminal unas lineas de codigo como estas:
 ```bash

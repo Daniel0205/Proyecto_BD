@@ -370,46 +370,51 @@ app.post("/KmUsados", function (req, res) {
 
 //Ingresa un nuevo usuario en la base de datos
 app.post("/insertarUser", function (req, res) {
+
+  if(validacionActualizar(req.body)){
   
-  let str ='';
+    let str ='';
 
-  connect(function(err, client, done) {
-    if(err) {
-        return console.error('error fetching client from pool', err);
-        }
-
-      if(req.body.user=="Conductor"){
-        let coche='INSERT INTO taxi VALUES (\''+req.body.placa+'\',\''+req.body.modelo+'\',\''+req.body.marca+'\',\''
-            +req.body.baul+'\','+req.body.fecha+','+req.body.soat+')';
-
-        client.query(coche);        
-
-        str='INSERT INTO conductor VALUES ('+req.body.cellphone+',crypt(\''+req.body.password
-            +'\', gen_salt(\'md5\')),\''+req.body.nombre+'\',\''+req.body.apellido+'\',\''
-            +req.body.genero+'\',\''+req.body.placa+'\',false,null)';
-      }
-      else {
-        str='INSERT INTO cliente VALUES ('+req.body.cellphone+',crypt(\''+req.body.password
-            +'\', gen_salt(\'md5\')),\''+req.body.nombre+'\',\''+req.body.apellido+'\',\''
-            +req.body.genero+'\','+req.body.tarjeta+',\''+req.body.direccion+'\')';
-      }
-      
-    //use the client for executing the query
-     console.log(str)
-     client.query(str,(err, result) =>{
-
-      //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
-      done(err);
-
+    connect(function(err, client, done) {
       if(err) {
-        res.json([{bool:false}]);
-        return console.error('error running query', err);
-      }
-      else{
-        res.json([{bool:true}]);
-      }
+          return console.error('error fetching client from pool', err);
+          }
+
+        if(req.body.user=="Conductor"){
+          let coche='INSERT INTO taxi VALUES (\''+req.body.placa+'\',\''+req.body.modelo+'\',\''+req.body.marca+'\',\''
+              +req.body.baul+'\','+req.body.fecha+','+req.body.soat+')';
+
+          client.query(coche);        
+
+          str='INSERT INTO conductor VALUES ('+req.body.cellphone+',crypt(\''+req.body.password
+              +'\', gen_salt(\'md5\')),\''+req.body.nombre+'\',\''+req.body.apellido+'\',\''
+              +req.body.genero+'\',\''+req.body.placa+'\',false,null)';
+        }
+        else {
+          str='INSERT INTO cliente VALUES ('+req.body.cellphone+',crypt(\''+req.body.password
+              +'\', gen_salt(\'md5\')),\''+req.body.nombre+'\',\''+req.body.apellido+'\',\''
+              +req.body.genero+'\','+req.body.tarjeta+',\''+req.body.direccion+'\')';
+        }
+        
+      //use the client for executing the query
+      console.log(str)
+      client.query(str,(err, result) =>{
+
+        //call `done(err)` to release the client back to the pool (or destroy it if there is an error)
+        done(err);
+
+        if(err) {
+          res.json([{bool:false}]);
+          return console.error('error running query', err);
+        }
+        else{
+          res.json([{bool:true}]);
+        }
+      });
     });
-  });
+  }else{
+    res.json([{bool:false}]);
+  }
 });
 
 

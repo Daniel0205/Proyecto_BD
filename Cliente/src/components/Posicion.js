@@ -115,12 +115,22 @@ class Posicion extends Component {
 
   handleCheck(event) {
     this.setState(
-      { check: !this.state.check },
-      this.props.callback({ favoritosDestino: this.state.check })
+      { check: !this.state.check },()=>{
+        if (this.state.tipo === "origen") {
+          this.props.callback({
+            favoritosOrigen: this.state.check
+          });
+        } else {
+          this.props.callback({
+            favoritosDestino: this.state.check
+          });
+        }
+      }
     );
   }
 
   render() {
+    
     switch (this.state.seleccion) {
       case "mapa":
         return (

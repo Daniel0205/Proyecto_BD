@@ -92,7 +92,6 @@ class Registro extends Component {
 
     if(this.props.user==="Usuario"){
 
-      console.log("entro")
       expreg = /^[A-Za-z0-9 -#/]{5,25}$/;
 
       if(!(expreg.test(this.state.direccion))|| this.state.direccion===''){
